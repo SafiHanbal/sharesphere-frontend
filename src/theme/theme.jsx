@@ -5,6 +5,8 @@ import fontFamily from './font-family';
 import fontSize from './font-size';
 import spacing from './spacing';
 
+const visibleHeight = window.innerHeight;
+
 const theme = {
   breakpoint,
   color,
@@ -12,6 +14,7 @@ const theme = {
   fontFamily,
   fontSize,
   spacing,
+  visibleHeight: `${visibleHeight}px`,
 };
 
 export default theme;
