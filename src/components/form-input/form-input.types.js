@@ -1,0 +1,6 @@
+export const INPUT_TYPES = {
+  DEFAULT: 'DEFAULT',
+  PASSWORD: 'PASSWORD',
+  SEARCH: 'SEARCH',
+  DATE: 'DATE',
+};
