@@ -10,7 +10,7 @@ const PasswordInput = ({ ...inputProps }) => {
 
   return (
     <>
-      <Input type={isPasswordVisible ? 'text' : 'password'} {...inputProps} />
+      <Input {...inputProps} type={isPasswordVisible ? 'text' : 'password'} />
 
       {isPasswordVisible && <HideIcon onClick={toggleIsPasswordVisible} />}
       {!isPasswordVisible && <ShowIcon onClick={toggleIsPasswordVisible} />}

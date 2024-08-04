@@ -20,16 +20,6 @@ export const Container = styled.div`
   }
 `;
 
-export const SocialLogin = styled.div`
-  & > button {
-    width: 100%;
-  }
-
-  & > button:not(:last-child) {
-    margin-bottom: 16px;
-  }
-`;
-
 export const Form = styled.form`
   & > button {
     width: 100%;
@@ -44,19 +34,24 @@ export const Heading = styled.h4`
   ${H4Styles}
 `;
 
+export const Info = styled.p`
+  ${PR12Styles}
+`;
+
 export const LoginIcon = styled(LoginSVG)`
   margin-left: ${({ theme }) => theme.spacing.s1};
 `;
 
-export const Info = styled.p`
-  ${PR12Styles}
+export const LoginLinkContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Paragraph = styled.p`
   ${PR14Styles}
 `;
 
-export const NavigationLink = styled(Link)`
+export const LoginLink = styled(Link)`
   ${PB14Styles}
 
   margin-left: ${({ theme }) => theme.spacing.s2};

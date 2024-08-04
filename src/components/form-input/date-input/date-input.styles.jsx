@@ -8,8 +8,15 @@ export const Input = styled(DefaultInput)`
   padding: ${({ theme }) => theme.spacing.s2} ${({ theme }) => theme.spacing.s3}
     ${({ theme }) => theme.spacing.s2} ${({ theme }) => theme.spacing.s6};
 
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+
+  &::-webkit-inner-spin-button,
   &::-webkit-calendar-picker-indicator {
-    opacity: 0;
+    /* opacity: 0; */
+    display: none;
   }
 `;
 

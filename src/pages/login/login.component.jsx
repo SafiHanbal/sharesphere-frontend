@@ -1,14 +1,21 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
+import Alert from '../../components/alert/alert.component';
 import Line from '../../components/line/line.component';
 
 import GoogleSVG from '../../assets/icons/google.svg?react';
 import FacebookSVG from '../../assets/icons/facebook.svg?react';
+
+import { loginUserAsync } from '../../store/user/userAction';
+import { selectLoading, selectUser } from '../../store/user/userSelector';
 
 import {
   Container,
@@ -17,12 +24,20 @@ import {
   Heading,
   LoginIcon,
   Info,
-  SignUpLinkContainer,
   Paragraph,
   NavigationLink,
 } from './login.styles';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    if (user) navigate('/');
+  }, [navigate, user]);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -39,7 +54,7 @@ const Login = () => {
         }),
     }),
     onSubmit: () => {
-      console.log(formik.values);
+      dispatch(loginUserAsync(formik.values, formik.resetForm));
     },
   });
 
@@ -60,6 +75,9 @@ const Login = () => {
 
       <Form onSubmit={formik.handleSubmit}>
         <Heading>Login With Email and Password</Heading>
+
+        <Alert />
+
         <FormInput
           label="Email"
           type="email"
@@ -84,24 +102,21 @@ const Login = () => {
           character and 1 special character.
         </Info>
 
-        <Button type="submit" disabled={!formik.isValid}>
-          <span>Login</span>
+        <Button type="submit" disabled={!formik.isValid || loading}>
+          {loading ? <span>Logging In</span> : <span>Login</span>}
           <LoginIcon />
         </Button>
+        <NavigationLink to="/auth/reset-password">
+          Forgot Password?
+        </NavigationLink>
       </Form>
 
       <Line />
 
-      <SignUpLinkContainer>
-        <Paragraph>
-          <span>Don&apos;t have an account?</span>
-          <NavigationLink to="/auth/sign-up">Sign Up</NavigationLink>
-        </Paragraph>
-
-        <NavigationLink to="/auth/reset-password">
-          Forgot Password?
-        </NavigationLink>
-      </SignUpLinkContainer>
+      <Paragraph>
+        <span>Don&apos;t have an account?</span>
+        <NavigationLink to="/auth/sign-up">Sign Up</NavigationLink>
+      </Paragraph>
     </Container>
   );
 };

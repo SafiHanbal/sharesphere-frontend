@@ -1,0 +1,6 @@
+export const AVATAR_TYPES = {
+  SMALL: 'SMALL',
+  MEDIUM: 'MEDIUM',
+  LARGE: 'LARGE',
+  EXTRA_LARGE: 'EXTRA_LARGE',
+};

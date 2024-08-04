@@ -1,4 +1,4 @@
-const effects = {
+const effect = {
   shadow: {
     default: {
       sl: '0 0 2px rgba(0, 0, 0, 0.25)',
@@ -19,4 +19,4 @@ const effects = {
   },
 };
 
-export default effects;
+export default effect;
