@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { H4Styles } from '../../utils/typography/heading.styles';
+import { PR12Styles } from '../../utils/typography/body.styles';
 
 export const Container = styled.div`
   & > *:not(:last-child) {
@@ -34,4 +35,8 @@ export const Form = styled.form`
 
 export const Heading = styled.h4`
   ${H4Styles}
+`;
+
+export const Info = styled.p`
+  ${PR12Styles}
 `;

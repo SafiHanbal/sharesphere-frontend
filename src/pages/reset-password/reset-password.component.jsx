@@ -1,10 +1,20 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
 import Line from '../../components/line/line.component';
+import Alert from '../../components/alert/alert.component';
+
+import {
+  selectLoading,
+  selectEmail,
+  selectActionTarget,
+} from '../../store/user/userSelector';
+import { getOtpAsync, resetPasswordAsync } from '../../store/user/userAction';
 
 import {
   Container,
@@ -14,6 +24,12 @@ import {
 } from './reset-password.styles';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const email = useSelector(selectEmail);
+  const actionTarget = useSelector(selectActionTarget);
+
   const formikGetOTP = useFormik({
     initialValues: {
       email: '',
@@ -24,9 +40,15 @@ const ResetPassword = () => {
         .email('Please provide a valid email.'),
     }),
     onSubmit: () => {
-      console.log('submit fired');
+      dispatch(getOtpAsync(formikGetOTP.values));
     },
   });
+
+  const resetPasswordSuccessHandler = () => {
+    formikGetOTP.resetForm();
+    formikResetPassword.resetForm();
+    navigate('/auth');
+  };
 
   const formikResetPassword = useFormik({
     initialValues: {
@@ -51,7 +73,11 @@ const ResetPassword = () => {
         }),
     }),
     onSubmit: () => {
-      console.log('submit fired form reset password');
+      const userCredentials = { ...formikResetPassword.values, email };
+      console.log(userCredentials);
+      dispatch(
+        resetPasswordAsync(userCredentials, resetPasswordSuccessHandler)
+      );
     },
   });
 
@@ -59,6 +85,9 @@ const ResetPassword = () => {
     <Container>
       <Form onSubmit={formikGetOTP.handleSubmit}>
         <Heading>Enter Email to Get OTP</Heading>
+
+        {actionTarget === 'get-otp' && <Alert />}
+
         <GetOTPContainer>
           <FormInput
             label="Email"
@@ -69,7 +98,18 @@ const ResetPassword = () => {
             errorMsg={formikGetOTP.touched.email && formikGetOTP.errors.email}
           />
 
-          <Button type="submit">Get OTP</Button>
+          <Button
+            type="submit"
+            disabled={
+              !formikGetOTP.isValid || (loading && actionTarget === 'get-otp')
+            }
+          >
+            {loading && actionTarget === 'get-otp' ? (
+              <span>Sending</span>
+            ) : (
+              <span>Get OTP</span>
+            )}
+          </Button>
         </GetOTPContainer>
       </Form>
 
@@ -77,6 +117,8 @@ const ResetPassword = () => {
 
       <Form onSubmit={formikResetPassword.handleSubmit}>
         <Heading>Reset Password</Heading>
+
+        {actionTarget === 'reset-password' && <Alert />}
 
         <FormInput
           label="OTP"
@@ -113,7 +155,19 @@ const ResetPassword = () => {
           }
         />
 
-        <Button type="submit">Reset Password</Button>
+        <Button
+          type="submit"
+          disabled={
+            !formikResetPassword.isValid ||
+            (loading && actionTarget === 'reset-password')
+          }
+        >
+          {loading && actionTarget === 'reset-password' ? (
+            <span>Sending</span>
+          ) : (
+            <span>Reset Password</span>
+          )}
+        </Button>
       </Form>
     </Container>
   );

@@ -22,6 +22,7 @@ import {
   LoginLinkContainer,
   Paragraph,
   LoginLink,
+  InfoContainer,
 } from './sign-up.styles';
 
 const SignUp = () => {
@@ -31,12 +32,12 @@ const SignUp = () => {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    if (user) navigate('/');
+    if (user && user.firstName) navigate('/');
   }, [navigate, user]);
 
   const onSignUpSuccess = () => {
     formik.resetForm();
-    navigate('/auth/sign-up-info');
+    navigate('/auth/sign-up-personal-info');
   };
 
   const formik = useFormik({
@@ -118,10 +119,13 @@ const SignUp = () => {
           }
         />
 
-        <Info>
-          Password should have min 8 characters with 1 number, 1 uppercase
-          character and 1 special character.
-        </Info>
+        <InfoContainer>
+          <Info>Username can only have letters, numbers, and underscore.</Info>
+          <Info>
+            Password should have min 8 characters with 1 number, 1 uppercase
+            character and 1 special character.
+          </Info>
+        </InfoContainer>
 
         <Button type="submit" disabled={!formik.isValid || loading}>
           {loading ? <span>Signing Up</span> : <span>Sign Up</span>}

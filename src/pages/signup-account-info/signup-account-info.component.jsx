@@ -3,8 +3,9 @@ import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import Stepper from '../../components/stepper/stepper.component';
 import { BUTTON_TYPES } from '../../components/button/button.types';
+import Alert from '../../components/alert/alert.component';
+import Stepper from '../../components/stepper/stepper.component';
 import Button from '../../components/button/button.component';
 import TextArea from '../../components/text-area/text-area.component';
 
@@ -51,6 +52,7 @@ const SignUpAccountInfo = () => {
       <Stepper step="2" totalStep="3" title="Account Info" />
 
       <Form onSubmit={formik.handleSubmit}>
+        <Alert />
         <TextArea
           label="Bio"
           rows={5}

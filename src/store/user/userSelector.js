@@ -16,3 +16,13 @@ export const selectToken = createSelector(
   [selectUserReducer],
   (userSlice) => userSlice.token
 );
+
+export const selectEmail = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.email
+);
+
+export const selectActionTarget = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.actionTarget
+);

@@ -40,7 +40,6 @@ const SignUpProfilePicture = () => {
       <Stepper step="3" totalStep="3" title="Profile Picture" />
 
       <Alert />
-
       <Form onSubmit={onSubmitHandler}>
         <Avatar
           avatarType={AVATAR_TYPES.EXTRA_LARGE}

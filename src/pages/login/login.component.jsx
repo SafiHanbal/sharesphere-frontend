@@ -14,8 +14,16 @@ import Line from '../../components/line/line.component';
 import GoogleSVG from '../../assets/icons/google.svg?react';
 import FacebookSVG from '../../assets/icons/facebook.svg?react';
 
-import { loginUserAsync } from '../../store/user/userAction';
-import { selectLoading, selectUser } from '../../store/user/userSelector';
+import {
+  loginUserAsync,
+  loginWithGoogleAsync,
+  loginWithFacebookAsync,
+} from '../../store/user/userAction';
+import {
+  selectLoading,
+  selectUser,
+  selectActionTarget,
+} from '../../store/user/userSelector';
 
 import {
   Container,
@@ -32,6 +40,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
+  const actionTarget = useSelector(selectActionTarget);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -58,16 +67,40 @@ const Login = () => {
     },
   });
 
+  const loginWithGoogleHandler = () => {
+    dispatch(loginWithGoogleAsync());
+  };
+
+  const loginWithFacebookHandler = () => {
+    dispatch(loginWithFacebookAsync());
+  };
+
   return (
     <Container>
       <SocialLogin>
-        <Button buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}>
+        <Button
+          buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}
+          onClick={loginWithGoogleHandler}
+          disabled={loading && actionTarget === 'login-with-google'}
+        >
           <GoogleSVG />
-          <span>Login With Google</span>
+          {loading && actionTarget === 'login-with-google' ? (
+            <span>Loging In</span>
+          ) : (
+            <span>Login With Google</span>
+          )}
         </Button>
-        <Button buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}>
+        <Button
+          buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}
+          onClick={loginWithFacebookHandler}
+          disabled={loading && actionTarget === 'login-with-facebook'}
+        >
           <FacebookSVG />
-          <span>Login With Facebook</span>
+          {loading && actionTarget === 'login-with-facebook' ? (
+            <span>Loging In</span>
+          ) : (
+            <span>Login With Facebook</span>
+          )}
         </Button>
       </SocialLogin>
 
@@ -102,8 +135,15 @@ const Login = () => {
           character and 1 special character.
         </Info>
 
-        <Button type="submit" disabled={!formik.isValid || loading}>
-          {loading ? <span>Logging In</span> : <span>Login</span>}
+        <Button
+          type="submit"
+          disabled={!formik.isValid || (loading && actionTarget === 'login')}
+        >
+          {loading && actionTarget === 'login' ? (
+            <span>Logging In</span>
+          ) : (
+            <span>Login</span>
+          )}
           <LoginIcon />
         </Button>
         <NavigationLink to="/auth/reset-password">

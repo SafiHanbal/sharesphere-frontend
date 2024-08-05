@@ -34,6 +34,12 @@ export const Heading = styled.h4`
   ${H4Styles}
 `;
 
+export const InfoContainer = styled.div`
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing.s2};
+  }
+`;
+
 export const Info = styled.p`
   ${PR12Styles}
 `;

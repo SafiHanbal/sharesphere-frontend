@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';
+import Alert from '../../components/alert/alert.component';
 import Stepper from '../../components/stepper/stepper.component';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
@@ -56,6 +57,7 @@ const SignUpPersonalInfo = () => {
       <Stepper step="1" totalStep="3" title="Personal Info" />
 
       <Form onSubmit={formik.handleSubmit}>
+        <Alert />
         <FormInput
           label="First Name"
           type="text"
