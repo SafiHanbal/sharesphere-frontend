@@ -1,5 +1,13 @@
+import SearchUserLayout from '../../layouts/search-user/search-user.component';
+
+import { Container } from './search-user.styles';
+
 const SearchUser = () => {
-  return 'This is search user page';
+  return (
+    <Container>
+      <SearchUserLayout />
+    </Container>
+  );
 };
 
 export default SearchUser;

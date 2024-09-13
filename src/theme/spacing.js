@@ -8,6 +8,7 @@ const spacing = {
   s7: '48px',
   s8: '56px',
   s9: '60px',
+  s10: '80px',
 };
 
 export default spacing;

@@ -147,7 +147,6 @@ export const resetPasswordAsync =
       dispatch(resetPasswordSuccess());
       dispatch(showAlert(data.message, ALERT_TYPES.SUCCESS));
     } catch (err) {
-      console.log(err);
       dispatch(resetPasswordFailed());
       dispatch(showAlert(err.response.data.message));
     }

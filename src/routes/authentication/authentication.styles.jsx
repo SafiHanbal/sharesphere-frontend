@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   min-height: ${({ theme }) => theme.visibleHeight};
-  padding: ${({ theme }) => theme.spacing.s4};
 
   display: flex;
   flex-direction: column;

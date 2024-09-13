@@ -6,6 +6,7 @@ import fontSize from './font-size';
 import spacing from './spacing';
 
 const visibleHeight = window.innerHeight;
+const visibleWidth = window.innerWidth;
 
 const theme = {
   breakpoint,
@@ -15,6 +16,7 @@ const theme = {
   fontSize,
   spacing,
   visibleHeight: `${visibleHeight}px`,
+  visibleWidth: `${visibleWidth}px`,
 };
 
 export default theme;

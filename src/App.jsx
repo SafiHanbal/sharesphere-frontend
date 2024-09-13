@@ -16,6 +16,7 @@ const App = () => {
         <Route path="/search-user" element={<SearchUser />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
+      <Route path="/account/:userId" element={<Profile />} />
       <Route path="/auth/*" element={<Authentication />} />
     </Routes>
   );

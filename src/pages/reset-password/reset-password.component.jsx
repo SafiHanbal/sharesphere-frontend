@@ -74,7 +74,6 @@ const ResetPassword = () => {
     }),
     onSubmit: () => {
       const userCredentials = { ...formikResetPassword.values, email };
-      console.log(userCredentials);
       dispatch(
         resetPasswordAsync(userCredentials, resetPasswordSuccessHandler)
       );
