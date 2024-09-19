@@ -1,4 +1,9 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import Avatar from '../avatar/avatar.component';
+
+import { selectUser, selectToken } from '../../store/user/userSelector';
+import { accessChatAsync } from '../../store/chat/chatAction';
 
 import {
   Container,
@@ -10,26 +15,38 @@ import {
 } from './users-lists-item.styles';
 
 const UsersListItem = ({
+  userId,
   avatar,
   name,
-  lastChat,
+  latestMessage,
   link,
   closeHandler,
   type,
 }) => {
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const currentUser = useSelector(selectUser);
+
+  const onClickHandler = () => {
+    dispatch(accessChatAsync(userId, token));
+  };
+
   return (
-    <Container to={link}>
+    // onClickHandler will run only if there is no link available
+    <Container to={link} onClick={!link && onClickHandler}>
       <Avatar imageSrc={avatar} />
       <div>
         <Name>{name}</Name>
 
-        {lastChat && (
+        {latestMessage && (
           <MoreInfo>
-            {lastChat.name && <ChatName>{lastChat.name}:</ChatName>}
+            {latestMessage.sender === currentUser._id && (
+              <ChatName>You:</ChatName>
+            )}
             <span>
-              {lastChat.chat.length > 15
-                ? lastChat.chat.slice(0, 15) + '...'
-                : lastChat.chat}
+              {latestMessage.content.length > 25
+                ? latestMessage.content.slice(0, 25) + '...'
+                : latestMessage.content}
             </span>
           </MoreInfo>
         )}

@@ -1,4 +1,5 @@
 export const AVATAR_TYPES = {
+  EXTRA_SMALL: 'EXTRA_SMALL',
   SMALL: 'SMALL',
   MEDIUM: 'MEDIUM',
   LARGE: 'LARGE',

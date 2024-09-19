@@ -37,6 +37,7 @@ const FormInput = ({
   onChangeHandler,
   errorMsg,
   placeholder,
+  ...otherProps
 }) => {
   const CustomInput = getInput(inputType);
 
@@ -59,6 +60,7 @@ const FormInput = ({
           value={value}
           onChange={onChangeHandler}
           placeholder={placeholder && placeholder}
+          {...otherProps}
         />
       </InputContainer>
 

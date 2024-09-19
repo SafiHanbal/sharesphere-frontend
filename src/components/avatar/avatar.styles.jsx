@@ -4,6 +4,12 @@ const BaseAvatar = styled.img`
   border-radius: 50%;
 `;
 
+export const ExtraSmallAvatar = styled(BaseAvatar)`
+  height: 36px;
+  width: 36px;
+  box-shadow: ${({ theme }) => theme.effect.shadow.default.sd};
+`;
+
 export const SmallAvatar = styled(BaseAvatar)`
   height: 48px;
   width: 48px;

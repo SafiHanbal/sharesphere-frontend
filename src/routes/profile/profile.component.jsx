@@ -23,8 +23,6 @@ const Profile = () => {
 
   const [user, setUser] = useState(null);
 
-  console.log(href);
-
   // Fetching User Data if it is account page
   useEffect(() => {
     if (userId) dispatch(getAccountUserAsync(userId));

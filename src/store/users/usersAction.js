@@ -10,11 +10,15 @@ import { showAlert } from '../alert/alertAction';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export const getUsersListAsync = (searchStr) => async (dispatch) => {
+export const getUsersListAsync = (searchStr, token) => async (dispatch) => {
   dispatch(initializeAsyncFunc());
   try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
     const url = `${baseUrl}users/search/${searchStr}?fields=firstName,lastName,profilePicture`;
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, config);
 
     dispatch(getUsersSuccess(data.data.users));
   } catch (err) {

@@ -1,11 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';
 import Avatar from '../../components/avatar/avatar.component';
 import Button from '../../components/button/button.component';
-
 import Line from '../../components/line/line.component';
+
+import { selectToken } from '../../store/user/userSelector';
+import { accessChatAsync } from '../../store/chat/chatAction';
 
 import {
   AccountHeader,
@@ -24,9 +27,17 @@ import {
 } from './profile-info.styles';
 
 const ProfileInfo = ({ userId, user }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username, firstName, lastName, bio } = user;
+  const token = useSelector(selectToken);
 
+  const onMessageButtonClick = () => {
+    dispatch(accessChatAsync(userId, token));
+
+    navigate('/chats');
+  };
+
+  const { username, firstName, lastName, bio } = user;
   return (
     <>
       {userId ? (
@@ -59,7 +70,10 @@ const ProfileInfo = ({ userId, user }) => {
             <Button buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}>
               Follow
             </Button>
-            <Button buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}>
+            <Button
+              buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}
+              onClick={onMessageButtonClick}
+            >
               Message
             </Button>
             <Button buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}>

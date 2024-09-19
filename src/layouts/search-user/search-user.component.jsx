@@ -8,11 +8,13 @@ import UsersList from '../../components/users-list/users-list.component';
 
 import { getUsersListAsync } from '../../store/users/usersAction';
 import { selectUsersList } from '../../store/users/usersSelector';
+import { selectToken } from '../../store/user/userSelector';
 
 import { Container, Form, Heading } from './search-user.styles';
 
 const SearchUser = () => {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
   const usersList = useSelector(selectUsersList);
 
   const formik = useFormik({
@@ -21,7 +23,7 @@ const SearchUser = () => {
     },
     onSubmit: () => {
       if (!formik.values.searchStr) return;
-      dispatch(getUsersListAsync(formik.values.searchStr));
+      dispatch(getUsersListAsync(formik.values.searchStr, token));
     },
   });
 
