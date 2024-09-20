@@ -21,10 +21,6 @@ export const HeaderContainer = styled.div`
   }
 `;
 
-export const Image = styled.img`
-  width: 100%;
-`;
-
 export const InteractionsContainer = styled.div`
   padding: ${({ theme }) => theme.spacing.s3};
 

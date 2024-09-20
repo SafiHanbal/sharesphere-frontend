@@ -99,6 +99,12 @@ export const AddPostIcon = styled(AddPostSVG)`
   }
 `;
 
+export const AddPostIconActive = styled(AddPostSVG)`
+  & path {
+    fill: ${({ theme }) => theme.color.primary.dark};
+  }
+`;
+
 export const MenuIcon = styled(MenuSVG)`
   & path {
     fill: ${({ theme }) => theme.color.gray.g5};

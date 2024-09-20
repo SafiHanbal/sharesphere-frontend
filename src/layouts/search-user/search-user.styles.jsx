@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { H4Styles } from '../../utils/typography/heading.styles';
 
 export const Container = styled.div`
-  min-height: calc(${({ theme }) => theme.visibleHeight} - 74px);
+  height: calc(${({ theme }) => theme.visibleHeight} - 74px);
 
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing.s3};
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
-    min-height: calc(${({ theme }) => theme.visibleHeight} - 148px);
+    height: calc(${({ theme }) => theme.visibleHeight} - 148px);
   }
 `;
 

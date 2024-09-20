@@ -47,7 +47,12 @@ const SignUpProfilePicture = () => {
           altText="Profile Pictrue Preview"
         />
         <Label htmlFor="profile-pic">Upload Photo</Label>
-        <Input id="profile-pic" type="file" onChange={onChangeHandler} />
+        <Input
+          id="profile-pic"
+          type="file"
+          accept="image/*"
+          onChange={onChangeHandler}
+        />
         <Button
           type="submit"
           buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}

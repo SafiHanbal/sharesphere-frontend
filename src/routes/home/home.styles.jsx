@@ -64,6 +64,12 @@ export const ContentContainer = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    column-gap: ${({ theme }) => theme.spacing.s4};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     column-gap: ${({ theme }) => theme.spacing.s10};
   }
 `;

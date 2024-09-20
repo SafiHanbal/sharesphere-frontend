@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import LogoSrc from '../../assets/logo/logo.png';
 
 import Alert from '../../components/alert/alert.component';
@@ -24,7 +26,9 @@ const Home = () => {
       <Header>
         <Logo src={LogoSrc} alt="ShareSphere Logo" />
         <NotificationsIcon />
-        <AddPostIcon />
+        <Link to="/add-post">
+          <AddPostIcon />
+        </Link>
         <LineContainer>
           <Line />
         </LineContainer>

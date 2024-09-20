@@ -7,6 +7,7 @@ import Chats from './routes/chats/chats.component';
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
 import Profile from './routes/profile/profile.component';
+import AddPost from './routes/add-post/add-post.component';
 import SearchUser from './routes/search-user/search-user.component';
 import SingleChat from './routes/single-chat/single-chat.component';
 
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/chats/*" element={<Chats />} />
         <Route path="/search-user" element={<SearchUser />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/add-post" element={<AddPost />} />
       </Route>
       <Route path="/account/:userId" element={<Profile />} />
       <Route path="/auth/*" element={<Authentication />} />

@@ -16,6 +16,7 @@ import {
   ProfileIconActive,
   NotificationsIcon,
   AddPostIcon,
+  AddPostIconActive,
   MenuIcon,
 } from './top-navbar.styles';
 
@@ -37,7 +38,9 @@ const TopNavbar = () => {
             {href === '/profile' ? <ProfileIconActive /> : <ProfileIcon />}
           </NavItem>
           <NotificationsIcon />
-          <AddPostIcon />
+          <NavItem to="/add-post">
+            {href === '/add-post' ? <AddPostIconActive /> : <AddPostIcon />}
+          </NavItem>
           <MenuIcon />
         </NavItems>
       </Nav>

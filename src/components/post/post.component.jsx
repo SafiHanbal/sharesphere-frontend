@@ -1,7 +1,6 @@
-import DefaultPostImage from '../../assets/images/placeholder-post.png';
-
-// import Line from '../line/line.component';
+import Line from '../line/line.component';
 import UsersListItem from '../users-list-item/users-list-item.component';
+import Carousel from '../carousel/carousel.component';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { BUTTON_TYPES } from '../button/button.types';
@@ -9,7 +8,6 @@ import { BUTTON_TYPES } from '../button/button.types';
 import {
   Container,
   HeaderContainer,
-  Image,
   InteractionsContainer,
   InteractionsIconContainer,
   LikeIcon,
@@ -27,9 +25,9 @@ const Post = () => {
       <HeaderContainer>
         <UsersListItem name="Safi Hanbal" type="post" />
       </HeaderContainer>
-      {/* <Line /> */}
-      <Image src={DefaultPostImage} />
-      {/* <Line /> */}
+      <Line />
+      <Carousel />
+      <Line />
       <InteractionsContainer>
         <InteractionsIconContainer>
           <LikeIcon />
