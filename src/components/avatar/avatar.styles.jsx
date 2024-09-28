@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const BaseAvatar = styled.img`
   border-radius: 50%;
+  object-position: center;
+  object-fit: cover;
 `;
 
 export const ExtraSmallAvatar = styled(BaseAvatar)`

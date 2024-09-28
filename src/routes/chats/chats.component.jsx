@@ -42,11 +42,11 @@ const Chats = () => {
 
     const formattedChatList = chatList.map((chat) => {
       const otherUser = chat.users.filter(
-        (user) => user._id !== currentUser._id
+        (user) => user?._id !== currentUser?._id
       )[0];
 
       return {
-        chatId: chat._id,
+        chatId: chat?._id,
         ...otherUser,
         latestMessage: chat.latestMessage,
       };
@@ -54,7 +54,7 @@ const Chats = () => {
 
     setUserList(formattedChatList);
     setFilteredUserList(formattedChatList);
-  }, [chatList, currentUser._id]);
+  }, [chatList, currentUser?._id]);
 
   const onChangeHandler = (event) => {
     const { value } = event.target;

@@ -1,7 +1,10 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import {
   PB12Styles,
   PB16Styles,
+  PR12Styles,
   PR14Styles,
 } from '../../utils/typography/body.styles';
 import { H3Styles } from '../../utils/typography/heading.styles';
@@ -16,6 +19,7 @@ const Header = styled.header`
   padding: ${({ theme }) => theme.spacing.s3} ${({ theme }) => theme.spacing.s4};
   box-shadow: ${({ theme }) => theme.effect.shadow.offset.sl};
 
+  position: relative;
   display: grid;
   grid-column-gap: ${({ theme }) => theme.spacing.s3};
   align-items: center;
@@ -43,6 +47,10 @@ export const BackIcon = styled(BackIconSvg)`
   }
 `;
 
+export const AddPostLink = styled(Link)`
+  height: 24px;
+`;
+
 export const AddPostIcon = styled(AddPostIconSvg)`
   & path {
     fill: ${({ theme }) => theme.color.gray.g9};
@@ -50,6 +58,8 @@ export const AddPostIcon = styled(AddPostIconSvg)`
 `;
 
 export const MenuIcon = styled(MenuIconSvg)`
+  cursor: pointer;
+
   & path {
     fill: ${({ theme }) => theme.color.gray.g9};
   }
@@ -72,6 +82,10 @@ export const InfoContainer = styled.div`
   }
 `;
 
+export const AlertContainer = styled.div`
+  text-align: left;
+`;
+
 export const Name = styled.h3`
   ${H3Styles}
 `;
@@ -83,6 +97,19 @@ export const UserNameBigScreen = styled.p`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     display: block;
   }
+`;
+
+export const StatsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
+export const StatsHeading = styled.p`
+  ${PR12Styles}
+`;
+
+export const StatsText = styled.p`
+  ${PB16Styles}
 `;
 
 export const Bio = styled.p`

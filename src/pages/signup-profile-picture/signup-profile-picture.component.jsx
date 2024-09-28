@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { BUTTON_TYPES } from '../../components/button/button.types';
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
@@ -9,6 +10,8 @@ import Avatar from '../../components/avatar/avatar.component';
 import Stepper from '../../components/stepper/stepper.component';
 
 import { showAlert } from '../../store/alert/alertAction';
+import { updateProfilePictureAsync } from '../../store/user/userAction';
+import { selectToken } from '../../store/user/userSelector';
 
 import {
   Container,
@@ -21,18 +24,30 @@ import {
 
 const SignUpProfilePicture = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector(selectToken);
   const [photoSrc, setPhotoSrc] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
+  const successHandler = () => {
+    navigate('/');
+  };
+
+  // Change photo onChange listener
   const onChangeHandler = (event) => {
     const file = event.target.files[0];
     if (!file.type.startsWith('image/'))
       return dispatch(showAlert('Invalid file type. Please upload an image.'));
 
+    setPhoto(file);
     setPhotoSrc(URL.createObjectURL(file));
   };
 
+  // Submit for profile picture form
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
+    dispatch(updateProfilePictureAsync(token, photo, successHandler));
   };
 
   return (

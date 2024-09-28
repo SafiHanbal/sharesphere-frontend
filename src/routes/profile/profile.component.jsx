@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams, useHref } from 'react-router-dom';
+import { useParams, useHref, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { selectToken } from '../../store/user/userSelector';
-// import { logoutUserAsync } from '../../store/user/userAction';
+import { selectToken } from '../../store/user/userSelector';
 import { getAccountUserAsync } from '../../store/users/usersAction';
 import { selectUser } from '../../store/user/userSelector';
 import { selectAccountUser } from '../../store/users/usersSelector';
@@ -17,16 +16,23 @@ const Profile = () => {
   const { userId } = useParams();
   const href = useHref();
   const dispatch = useDispatch();
-  // const token = useSelector(selectToken);
+  const navigate = useNavigate();
+
+  const token = useSelector(selectToken);
   const logedInUser = useSelector(selectUser);
   const accountUser = useSelector(selectAccountUser);
 
   const [user, setUser] = useState(null);
 
+  // Redirecting user to auth if not logged in
+  useEffect(() => {
+    if (!logedInUser) navigate('/auth');
+  }, [logedInUser, navigate]);
+
   // Fetching User Data if it is account page
   useEffect(() => {
-    if (userId) dispatch(getAccountUserAsync(userId));
-  }, [dispatch, userId]);
+    if (userId) dispatch(getAccountUserAsync(token, userId));
+  }, [dispatch, token, userId]);
 
   // Setting user depending upong account or profile page
   useEffect(() => {
@@ -40,6 +46,7 @@ const Profile = () => {
   return (
     <>
       {href !== '/profile' && <TopNavbar />}
+
       <Container>
         {user && <ProfileInfo userId={userId} user={user} />}
 

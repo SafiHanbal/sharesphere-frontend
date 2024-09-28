@@ -18,11 +18,13 @@ export const Container = styled.div`
 
 export const ContentContainer = styled.div`
   max-width: 600px;
+
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing.s3};
+  }
 `;
 
 export const Header = styled.header`
-  margin-bottom: ${({ theme }) => theme.spacing.s3};
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     display: none;
   }
@@ -63,6 +65,7 @@ export const StyledImagesInput = styled.button`
   ${LB14Styles}
 
   position: relative;
+  display: block;
   color: ${({ theme }) => theme.color.gray.g9};
   width: 100%;
   padding-bottom: 75%;

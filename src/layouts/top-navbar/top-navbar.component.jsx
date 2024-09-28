@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useHref } from 'react-router-dom';
 
 import LogoSrc from '../../assets/logo/logo.png';
+import MenuDropdown from '../../components/menu-dropdown/menu-dropdown.component';
 
 import {
   Container,
@@ -22,6 +24,9 @@ import {
 
 const TopNavbar = () => {
   const href = useHref();
+  const [dropdownActive, setDropdownActive] = useState(false);
+
+  const toggleDropdownActive = () => setDropdownActive(!dropdownActive);
 
   return (
     <Container>
@@ -41,7 +46,9 @@ const TopNavbar = () => {
           <NavItem to="/add-post">
             {href === '/add-post' ? <AddPostIconActive /> : <AddPostIcon />}
           </NavItem>
-          <MenuIcon />
+
+          <MenuIcon onClick={toggleDropdownActive} />
+          {dropdownActive && <MenuDropdown />}
         </NavItems>
       </Nav>
     </Container>

@@ -37,11 +37,14 @@ export const Logo = styled.img`
 `;
 
 export const NavItems = styled.nav`
+  position: relative;
+
   display: grid;
   grid-template-columns: repeat(6, max-content);
   grid-column-gap: 64px;
 
-  & > * {
+  & > a,
+  & > svg {
     height: ${({ theme }) => theme.spacing.s4};
     cursor: pointer;
   }

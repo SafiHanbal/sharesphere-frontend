@@ -35,7 +35,7 @@ export const Posts = styled.div`
 export const Post = styled.div`
   height: calc((${({ theme }) => theme.visibleWidth} - 48px) / 3);
   width: 100%;
-  background-color: orangered;
+  background-color: gray;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     height: calc(

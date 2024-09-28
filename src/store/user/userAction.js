@@ -3,34 +3,22 @@ import { ALERT_TYPES } from '../../components/alert/alert.types';
 import { showAlert } from '../alert/alertAction';
 
 import {
-  loginUserStart,
+  initializeAsyncFunc,
+  endAsyncFunc,
   loginUserSuccess,
-  loginUserFailed,
-  loginWithGoogleStart,
   loginWithGoogleSuccess,
-  loginWithGoogleFailed,
-  loginWithFacebookStart,
   loginWithFacebookSuccess,
-  loginWithFacebookFailed,
-  signUpUserStart,
   signUpUserSuccess,
-  signUpUserFailed,
-  logoutUserStart,
   logoutUserSuccess,
-  logoutUserFailed,
-  resetPasswordStart,
   resetPasswordSuccess,
-  resetPasswordFailed,
-  updateUserStart,
   updateUserSuccess,
-  updateUserFailed,
 } from './userSlice';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const loginUserAsync =
   (userCredentials, resetForm) => async (dispatch) => {
-    dispatch(loginUserStart());
+    dispatch(initializeAsyncFunc('login'));
     try {
       const { data } = await axios.post(
         `${baseUrl}users/login`,
@@ -46,36 +34,36 @@ export const loginUserAsync =
       resetForm();
       dispatch(showAlert('Login successfully!', ALERT_TYPES.SUCCESS));
     } catch (err) {
-      dispatch(loginUserFailed());
+      dispatch(endAsyncFunc());
       dispatch(showAlert(err.response.data.message));
     }
   };
 
 export const loginWithGoogleAsync = () => async (dispatch) => {
-  dispatch(loginWithGoogleStart());
+  dispatch(initializeAsyncFunc('login-with-google'));
 
   try {
     dispatch(loginWithGoogleSuccess());
   } catch (err) {
-    dispatch(loginWithGoogleFailed());
+    dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
   }
 };
 
 export const loginWithFacebookAsync = () => async (dispatch) => {
-  dispatch(loginWithFacebookStart());
+  dispatch(initializeAsyncFunc('login-with-facebook'));
 
   try {
     dispatch(loginWithFacebookSuccess());
   } catch (err) {
-    dispatch(loginWithFacebookFailed());
+    dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
   }
 };
 
 export const signUpUserAsync =
   (userCredentials, successHandler) => async (dispatch) => {
-    dispatch(signUpUserStart());
+    dispatch(initializeAsyncFunc('signUp'));
     try {
       const { data } = await axios.post(
         `${baseUrl}users/sign-up`,
@@ -96,13 +84,13 @@ export const signUpUserAsync =
         )
       );
     } catch (err) {
-      dispatch(signUpUserFailed());
+      dispatch(endAsyncFunc());
       dispatch(showAlert(err.response.data.message));
     }
   };
 
 export const logoutUserAsync = (token) => async (dispatch) => {
-  dispatch(logoutUserStart());
+  dispatch(initializeAsyncFunc('logout'));
   try {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -113,13 +101,13 @@ export const logoutUserAsync = (token) => async (dispatch) => {
     dispatch(logoutUserSuccess());
     dispatch(showAlert('Logout successfully!', ALERT_TYPES.SUCCESS));
   } catch (err) {
-    dispatch(logoutUserFailed());
+    dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
   }
 };
 
 export const getOtpAsync = (userCredentials) => async (dispatch) => {
-  dispatch(resetPasswordStart('get-otp'));
+  dispatch(initializeAsyncFunc('get-otp'));
   try {
     const { data } = await axios.post(
       `${baseUrl}users/forgot-password`,
@@ -129,14 +117,14 @@ export const getOtpAsync = (userCredentials) => async (dispatch) => {
     dispatch(resetPasswordSuccess(userCredentials.email));
     dispatch(showAlert(data.message, ALERT_TYPES.SUCCESS));
   } catch (err) {
-    dispatch(resetPasswordFailed());
+    dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
   }
 };
 
 export const resetPasswordAsync =
   (userCredentials, successHandler) => async (dispatch) => {
-    dispatch(resetPasswordStart('reset-password'));
+    dispatch(initializeAsyncFunc('reset-password'));
     try {
       const { data } = await axios.post(
         `${baseUrl}users/reset-password`,
@@ -147,14 +135,14 @@ export const resetPasswordAsync =
       dispatch(resetPasswordSuccess());
       dispatch(showAlert(data.message, ALERT_TYPES.SUCCESS));
     } catch (err) {
-      dispatch(resetPasswordFailed());
+      dispatch(endAsyncFunc());
       dispatch(showAlert(err.response.data.message));
     }
   };
 
 export const updateUserAsync =
   (token, userId, userCredentials, successHandler) => async (dispatch) => {
-    dispatch(updateUserStart());
+    dispatch(initializeAsyncFunc('update-user'));
     try {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -167,12 +155,84 @@ export const updateUserAsync =
       );
 
       dispatch(updateUserSuccess(data.data.user));
-      successHandler();
+
+      if (successHandler) successHandler();
+
       dispatch(
         showAlert('User data updated successfully!', ALERT_TYPES.SUCCESS)
       );
     } catch (err) {
-      dispatch(updateUserFailed());
+      dispatch(endAsyncFunc());
+      dispatch(showAlert(err.response.data.message));
+    }
+  };
+
+export const updateProfilePictureAsync =
+  (token, profilePicture, successHandler) => async (dispatch) => {
+    dispatch(initializeAsyncFunc('update-profile-picture'));
+
+    if (!profilePicture) {
+      dispatch(endAsyncFunc());
+
+      return dispatch(
+        showAlert(
+          'Please provide a photo',
+          ALERT_TYPES.ERROR,
+          'update-profile-picture'
+        )
+      );
+    }
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const formData = new FormData();
+      formData.append('profilePicture', profilePicture);
+
+      const url = `${baseUrl}users/profile-picture`;
+      const { data } = await axios.patch(url, formData, config);
+
+      // Updating user data in local storage
+      dispatch(updateUserSuccess(data.data.user));
+      dispatch(
+        showAlert('Profile picture updated successfully.', ALERT_TYPES.SUCCESS)
+      );
+      if (successHandler) successHandler();
+    } catch (err) {
+      dispatch(endAsyncFunc());
+      dispatch(showAlert(err.response.data.message));
+    }
+  };
+
+export const updatePasswordAsync =
+  (token, passwordData) => async (dispatch) => {
+    dispatch(initializeAsyncFunc('update-password'));
+
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      const url = `${baseUrl}users/update-password`;
+      const { data } = await axios.post(url, passwordData, config);
+
+      // Updating user data in local storage
+      dispatch(
+        loginUserSuccess({
+          token: data.token,
+          user: data.data.user,
+        })
+      );
+      dispatch(
+        showAlert('Password updated successfully.', ALERT_TYPES.SUCCESS)
+      );
+    } catch (err) {
+      dispatch(endAsyncFunc());
       dispatch(showAlert(err.response.data.message));
     }
   };
