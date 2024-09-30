@@ -11,3 +11,8 @@ export const selectPostList = createSelector(
   [selectPostSlice],
   (postSlice) => postSlice.postList
 );
+
+export const selectPost = createSelector(
+  [selectPostSlice],
+  (postSlice) => postSlice.post
+);

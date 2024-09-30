@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+import { LB16Styles, LR12Styles } from '../../utils/typography/label.styles';
 
 export const Container = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
@@ -19,6 +22,8 @@ export const Container = styled.div`
 `;
 
 export const Posts = styled.div`
+  position: relative;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: ${({ theme }) => theme.spacing.s2};
@@ -31,21 +36,40 @@ export const Posts = styled.div`
   }
 `;
 
-// deleteme
-export const Post = styled.div`
-  height: calc((${({ theme }) => theme.visibleWidth} - 48px) / 3);
-  width: 100%;
-  background-color: gray;
+export const NoPostText = styled.p`
+  ${LB16Styles}
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
-    height: calc(
-      (((${({ theme }) => theme.visibleWidth} - 88px) / 2) - 16px) / 3
-    );
-  }
+  color: ${({ theme }) => theme.color.gray.g5};
+  text-align: center;
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
-    height: 180px;
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
-//  ((visibleWidth - 88px)/2 -16px) / 3
+export const PostLink = styled(Link)`
+  display: block;
+  text-decoration: none;
+  align-self: self-start;
+`;
+
+export const Post = styled.img`
+  width: 100%;
+`;
+
+export const PostData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const LikesCount = styled.p`
+  ${LR12Styles}
+`;
+
+export const LinkText = styled.p`
+  ${LR12Styles}
+
+  text-decoration: underline;
+`;

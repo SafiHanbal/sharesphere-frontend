@@ -6,7 +6,9 @@ import {
   getUsersSuccess,
   getAccountUserSuccess,
 } from './usersSlice';
+
 import { showAlert } from '../alert/alertAction';
+import { ALERT_TYPES } from '../../components/alert/alert.types';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -55,8 +57,10 @@ export const followUserAsync = (token, userId) => async (dispatch) => {
     await axios.get(url, config);
 
     dispatch(endAsyncFunc());
+    dispatch(showAlert('Followed user successfully', ALERT_TYPES.SUCCESS));
   } catch (err) {
     dispatch(endAsyncFunc());
+    dispatch(showAlert(err.response.data.message));
   }
 };
 
@@ -71,7 +75,9 @@ export const unfollowUserAsync = (token, userId) => async (dispatch) => {
     await axios.get(url, config);
 
     dispatch(endAsyncFunc());
+    dispatch(showAlert('Unfollowed user successfully.', ALERT_TYPES.SUCCESS));
   } catch (err) {
     dispatch(endAsyncFunc());
+    dispatch(showAlert(err.response.data.message));
   }
 };

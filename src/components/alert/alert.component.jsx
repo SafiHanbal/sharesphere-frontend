@@ -7,12 +7,13 @@ import SuccessAlert from './success-alert/success-alert.component';
 import WarningAlert from './warning-alert/warning-alert.component';
 import InfoAlert from './info-alert/info-alert.component';
 
+import { removeAlert } from '../../store/alert/alertSlice';
+
 import {
   selectIsAlertVisible,
   selectAlertMessage,
   selectAlertType,
 } from '../../store/alert/alertSelector';
-import { removeAlert } from '../../store/alert/alertSlice';
 
 const getAlert = (alertType) =>
   ({

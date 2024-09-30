@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import SettingIconSrc from '../../assets/icons/person.svg?react';
-import LogoutIconSrc from '../../assets/icons/box-arrow-right.svg?react';
+import SettingIconSVG from '../../assets/icons/person.svg?react';
+import LogoutIconSVG from '../../assets/icons/box-arrow-right.svg?react';
 
 import { LR14Styles } from '../../utils/typography/label.styles';
 
@@ -33,13 +33,13 @@ export const DropdownItems = styled.div`
   cursor: pointer;
 `;
 
-export const SettingIcon = styled(SettingIconSrc)`
+export const SettingIcon = styled(SettingIconSVG)`
   & > path {
     fill: ${({ theme }) => theme.color.gray.g7};
   }
 `;
 
-export const LogoutIcon = styled(LogoutIconSrc)`
+export const LogoutIcon = styled(LogoutIconSVG)`
   & > path {
     fill: ${({ theme }) => theme.color.gray.g7};
   }

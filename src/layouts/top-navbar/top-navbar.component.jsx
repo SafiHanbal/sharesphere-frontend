@@ -31,7 +31,9 @@ const TopNavbar = () => {
   return (
     <Container>
       <Nav>
-        <Logo src={LogoSrc} alt="ShareSphere Logo" />
+        <NavItem to="/">
+          <Logo src={LogoSrc} alt="ShareSphere Logo" />
+        </NavItem>
         <NavItems>
           <NavItem to="/">
             {href === '/' ? <HomeIconActive /> : <HomeIcon />}

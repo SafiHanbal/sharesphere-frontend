@@ -96,7 +96,8 @@ export const logoutUserAsync = (token) => async (dispatch) => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    await axios.get(`${baseUrl}users/logout`, config);
+    const url = `${baseUrl}users/logout`;
+    await axios.get(url, config);
 
     dispatch(logoutUserSuccess());
     dispatch(showAlert('Logout successfully!', ALERT_TYPES.SUCCESS));

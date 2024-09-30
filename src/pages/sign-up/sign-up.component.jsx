@@ -29,11 +29,11 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   useEffect(() => {
-    if (user && user.firstName) navigate('/');
-  }, [navigate, user]);
+    if (currentUser && currentUser?.firstName) navigate('/');
+  }, [navigate, currentUser]);
 
   const onSignUpSuccess = () => {
     formik.resetForm();

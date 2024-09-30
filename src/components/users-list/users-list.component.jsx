@@ -1,29 +1,38 @@
 import { Fragment } from 'react';
 
+import getImageSrc from '../../utils/getImageSrc';
+
 import UsersListItem from '../users-list-item/users-list-item.component';
 import Line from '../line/line.component';
-import { Container } from './users-list.styles';
 
 const UsersList = ({ usersList }) => {
   return (
-    <Container>
+    <div>
       <Line />
-      {usersList.map((user) => {
-        const { _id, firstName, lastName, link, avatar, latestMessage } = user;
+      {usersList?.map((user) => {
+        const {
+          _id,
+          firstName,
+          lastName,
+          link,
+          profilePicture,
+          latestMessage,
+        } = user;
+
         return (
           <Fragment key={_id}>
             <UsersListItem
               userId={_id}
               name={`${firstName} ${lastName}`}
               link={link}
-              avatar={avatar && null}
+              avatar={profilePicture && getImageSrc(profilePicture)}
               latestMessage={latestMessage}
             />
             <Line />
           </Fragment>
         );
       })}
-    </Container>
+    </div>
   );
 };
 

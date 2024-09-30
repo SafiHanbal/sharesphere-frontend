@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import FormInput from '../../components/form-input/form-input.component';
 import UsersList from '../../components/users-list/users-list.component';
 import SingleChat from '../../layouts/single-chat/single-chat.component';
-import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 
 import { selectToken, selectUser } from '../../store/user/userSelector';
 import {
@@ -41,14 +41,14 @@ const Chats = () => {
     if (!chatList.length) return;
 
     const formattedChatList = chatList.map((chat) => {
-      const otherUser = chat.users.filter(
+      const otherUser = chat?.users.filter(
         (user) => user?._id !== currentUser?._id
       )[0];
 
       return {
         chatId: chat?._id,
         ...otherUser,
-        latestMessage: chat.latestMessage,
+        latestMessage: chat?.latestMessage,
       };
     });
 
@@ -61,10 +61,10 @@ const Chats = () => {
 
     // To check if firstName or lastName includes the search string.
     const newUserList = userList.filter((user) => {
-      const firstFilter = user.firstName
+      const firstFilter = user?.firstName
         .toLowerCase()
         .includes(value.toLowerCase());
-      const secondFilter = user.lastName
+      const secondFilter = user?.lastName
         .toLowerCase()
         .includes(value.toLowerCase());
 

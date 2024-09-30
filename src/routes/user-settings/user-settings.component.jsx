@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import LogoSrc from '../../assets/logo/logo.png';
+import getImageSrc from '../../utils/getImageSrc';
 
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 
-import getImageSrc from '../../utils/getImageSrc';
 import Line from '../../components/line/line.component';
 import Alert from '../../components/alert/alert.component';
 import Avatar from '../../components/avatar/avatar.component';
@@ -47,12 +47,14 @@ import {
 const UserSettings = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
   const token = useSelector(selectToken);
   const actionTarget = useSelector(selectActionTarget);
 
   // Storing file and src for profile picture form
-  const [photoSrc, setPhotoSrc] = useState(getImageSrc(user?.profilePicture));
+  const [photoSrc, setPhotoSrc] = useState(
+    getImageSrc(currentUser?.profilePicture)
+  );
   const [photo, setPhoto] = useState(null);
 
   // Change photo onChange listener
@@ -71,10 +73,10 @@ const UserSettings = () => {
 
   const formikUpdateUser = useFormik({
     initialValues: {
-      username: user?.username,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      bio: user?.bio,
+      username: currentUser?.username,
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      bio: currentUser?.bio,
     },
     validationSchema: Yup.object({
       username: Yup.string()
@@ -87,7 +89,9 @@ const UserSettings = () => {
       bio: Yup.string().required('Bio is required.'),
     }),
     onSubmit: () => {
-      dispatch(updateUserAsync(token, user._id, formikUpdateUser.values));
+      dispatch(
+        updateUserAsync(token, currentUser?._id, formikUpdateUser.values)
+      );
     },
   });
 

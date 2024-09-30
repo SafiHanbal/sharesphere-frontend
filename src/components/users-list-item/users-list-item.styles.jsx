@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import CloseIconSvg from '../../assets/icons/x.svg?react';
-import MoreIconSvg from '../../assets/icons/three-dots-vertical.svg?react';
+import CloseIconSVG from '../../assets/icons/x.svg?react';
+import MoreIconSVG from '../../assets/icons/three-dots-vertical.svg?react';
 
 import {
   PB16Styles,
@@ -34,7 +34,7 @@ export const ChatName = styled.span`
   margin-right: ${({ theme }) => theme.spacing.s1};
 `;
 
-export const CloseIcon = styled(CloseIconSvg)`
+export const CloseIcon = styled(CloseIconSVG)`
   cursor: pointer;
 
   & path {
@@ -42,7 +42,7 @@ export const CloseIcon = styled(CloseIconSvg)`
   }
 `;
 
-export const MoreIcon = styled(MoreIconSvg)`
+export const MoreIcon = styled(MoreIconSVG)`
   cursor: pointer;
 
   & path {

@@ -23,9 +23,10 @@ import {
 } from './signup-profile-picture.styles';
 
 const SignUpProfilePicture = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
+
   const [photoSrc, setPhotoSrc] = useState(null);
   const [photo, setPhoto] = useState(null);
 

@@ -6,9 +6,9 @@ import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
 import UsersList from '../../components/users-list/users-list.component';
 
-import { getUsersListAsync } from '../../store/users/usersAction';
 import { selectUsersList } from '../../store/users/usersSelector';
 import { selectToken } from '../../store/user/userSelector';
+import { getUsersListAsync } from '../../store/users/usersAction';
 
 import { Container, Form, Heading } from './search-user.styles';
 

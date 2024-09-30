@@ -9,13 +9,13 @@ import { selectUser } from '../../store/user/userSelector';
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   useEffect(() => {
-    if (!user) {
+    if (!currentUser) {
       navigate('/auth');
     }
-  }, [navigate, user]);
+  }, [navigate, currentUser]);
 
   return (
     <>

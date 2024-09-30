@@ -6,6 +6,9 @@ const alertSlice = createSlice({
     isAlertVisible: false,
     alertMessage: null,
     alertType: null,
+    // isAlertVisible: true,
+    // alertMessage: 'Post created successfully',
+    // alertType: 'SUCCESS',
   },
   reducers: {
     setAlert(state, action) {

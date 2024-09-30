@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import LogoSrc from '../../assets/logo/logo.png';
@@ -5,8 +7,11 @@ import LogoSrc from '../../assets/logo/logo.png';
 import Alert from '../../components/alert/alert.component';
 import Line from '../../components/line/line.component';
 import Post from '../../components/post/post.component';
-
 import SearchUser from '../../layouts/search-user/search-user.component';
+
+import { selectToken } from '../../store/user/userSelector';
+import { selectPostList } from '../../store/post/postSelector';
+import { getPostListAsync } from '../../store/post/postAction';
 
 import {
   Container,
@@ -17,10 +22,19 @@ import {
   LineContainer,
   ContentContainer,
   PostContainer,
+  NoPostText,
   SearchUserContainer,
 } from './home.styles';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const postList = useSelector(selectPostList);
+
+  useEffect(() => {
+    dispatch(getPostListAsync(token));
+  }, [dispatch, token]);
+
   return (
     <Container>
       <Header>
@@ -36,9 +50,11 @@ const Home = () => {
       <Alert />
       <ContentContainer>
         <PostContainer>
-          <Post />
-          <Post />
-          <Post />
+          {postList.length > 0 ? (
+            postList.map((post) => <Post key={post._id} post={post} />)
+          ) : (
+            <NoPostText>Follow users to see their posts</NoPostText>
+          )}
         </PostContainer>
         <SearchUserContainer>
           <SearchUser />

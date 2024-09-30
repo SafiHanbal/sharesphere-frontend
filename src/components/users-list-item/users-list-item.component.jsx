@@ -12,7 +12,7 @@ import {
   ChatName,
   CloseIcon,
   MoreIcon,
-} from './users-lists-item.styles';
+} from './users-list-item.styles';
 
 const UsersListItem = ({
   userId,
@@ -22,6 +22,7 @@ const UsersListItem = ({
   link,
   closeHandler,
   type,
+  moreInfo,
 }) => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
@@ -40,18 +41,18 @@ const UsersListItem = ({
 
         {latestMessage && (
           <MoreInfo>
-            {latestMessage.sender === currentUser._id && (
+            {latestMessage?.sender === currentUser?._id && (
               <ChatName>You:</ChatName>
             )}
             <span>
-              {latestMessage.content.length > 25
-                ? latestMessage.content.slice(0, 25) + '...'
-                : latestMessage.content}
+              {latestMessage?.content?.length > 25
+                ? latestMessage?.content?.slice(0, 25) + '...'
+                : latestMessage?.content}
             </span>
           </MoreInfo>
         )}
 
-        {type === 'post' && <MoreInfo>12:00PM</MoreInfo>}
+        {moreInfo && <MoreInfo>{moreInfo}</MoreInfo>}
       </div>
       {closeHandler && <CloseIcon onClick={closeHandler} />}
       {type === 'post' && <MoreIcon />}

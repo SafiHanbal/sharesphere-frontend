@@ -2,15 +2,27 @@ import { useState, useEffect } from 'react';
 import { useParams, useHref, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectToken } from '../../store/user/userSelector';
-import { getAccountUserAsync } from '../../store/users/usersAction';
-import { selectUser } from '../../store/user/userSelector';
-import { selectAccountUser } from '../../store/users/usersSelector';
+import getImageSrc, { IMAGE_FOLDER } from '../../utils/getImageSrc';
+import getSingularOrPlural from '../../utils/getSingularOrPlural';
 
 import ProfileInfo from '../../layouts/profile-info/profile-info.component';
 import TopNavbar from '../../layouts/top-navbar/top-navbar.component';
 
-import { Container, Posts, Post } from './profile.styles';
+import { selectToken } from '../../store/user/userSelector';
+import { selectUser } from '../../store/user/userSelector';
+import { selectAccountUser } from '../../store/users/usersSelector';
+import { getAccountUserAsync } from '../../store/users/usersAction';
+
+import {
+  Container,
+  Posts,
+  NoPostText,
+  PostLink,
+  Post,
+  PostData,
+  LikesCount,
+  LinkText,
+} from './profile.styles';
 
 const Profile = () => {
   const { userId } = useParams();
@@ -19,29 +31,27 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const token = useSelector(selectToken);
-  const logedInUser = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
   const accountUser = useSelector(selectAccountUser);
 
   const [user, setUser] = useState(null);
 
   // Redirecting user to auth if not logged in
   useEffect(() => {
-    if (!logedInUser) navigate('/auth');
-  }, [logedInUser, navigate]);
+    if (!currentUser) navigate('/auth');
+  }, [currentUser, navigate]);
 
-  // Fetching User Data if it is account page
+  // Fetching User Data
   useEffect(() => {
-    if (userId) dispatch(getAccountUserAsync(token, userId));
-  }, [dispatch, token, userId]);
+    if (!token) return;
 
-  // Setting user depending upong account or profile page
+    dispatch(getAccountUserAsync(token, userId || currentUser?._id));
+  }, [dispatch, currentUser?._id, token, userId]);
+
+  // Setting user
   useEffect(() => {
-    if (userId) {
-      setUser(accountUser);
-    } else {
-      setUser(logedInUser);
-    }
-  }, [accountUser, logedInUser, userId]);
+    setUser(accountUser);
+  }, [accountUser]);
 
   return (
     <>
@@ -51,21 +61,23 @@ const Profile = () => {
         {user && <ProfileInfo userId={userId} user={user} />}
 
         <Posts>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {accountUser?.posts?.length > 0 ? (
+            accountUser?.posts.map((post) => (
+              <PostLink key={post._id} to={`/post/${post._id}`}>
+                <Post src={getImageSrc(post.images[0], IMAGE_FOLDER.POST)} />
+                <PostData>
+                  <LikesCount>
+                    {post.likesCount}{' '}
+                    {getSingularOrPlural('Like', post.likesCount)}
+                  </LikesCount>
+                  <LinkText>see post</LinkText>
+                </PostData>
+              </PostLink>
+            ))
+          ) : (
+            <NoPostText>User uploaded zero post</NoPostText>
+          )}
         </Posts>
-        {/* <button onClick={() => dispatch(logoutUserAsync(token))}>Logout</button> */}
       </Container>
     </>
   );

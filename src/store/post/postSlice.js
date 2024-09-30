@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   actionTarget: null,
 
   postList: [],
+  post: null,
 };
 
 const postSlice = createSlice({
@@ -18,9 +19,24 @@ const postSlice = createSlice({
     endAsyncFunc: (state) => {
       state.loading = false;
     },
+
+    getPostListSuccess: (state, action) => {
+      state.loading = false;
+      state.postList = action.payload;
+    },
+
+    getPostSuccess: (state, action) => {
+      state.loading = false;
+      state.post = action.payload;
+    },
   },
 });
 
-export const { initializeAsyncFunc, endAsyncFunc } = postSlice.actions;
+export const {
+  initializeAsyncFunc,
+  endAsyncFunc,
+  getPostListSuccess,
+  getPostSuccess,
+} = postSlice.actions;
 
 export const postReducer = postSlice.reducer;

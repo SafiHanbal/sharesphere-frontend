@@ -5,17 +5,18 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
 import Avatar from '../../components/avatar/avatar.component';
-import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 
 import { selectUser, selectToken } from '../../store/user/userSelector';
-import { setCurrentChat } from '../../store/chat/chatSlice';
 import {
   selectCurrentChat,
   selectMessages,
 } from '../../store/chat/chatSelector';
+
+import { setCurrentChat } from '../../store/chat/chatSlice';
 import {
   getMessagesAsync,
   sendMessageAsync,
@@ -35,6 +36,7 @@ import {
   OtherChat,
   Form,
 } from './single-chat.styles';
+import getImageSrc from '../../utils/getImageSrc';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 const SingleChat = () => {
@@ -53,47 +55,47 @@ const SingleChat = () => {
 
   // Setting chatUser to use in Header
   useEffect(() => {
-    const user = currentChat?.users.filter(
-      (user) => user._id !== currentUser._id
+    const user = currentChat?.users?.filter(
+      (user) => user?._id !== currentUser?._id
     )[0];
 
     setChatUser(user);
-  }, [currentChat, currentUser._id]);
+  }, [currentChat, currentUser?._id]);
 
   // Getting all messages
   useEffect(() => {
-    dispatch(getMessagesAsync(token, currentChat._id));
-  }, [currentChat._id, dispatch, token]);
+    dispatch(getMessagesAsync(token, currentChat?._id));
+  }, [currentChat?._id, dispatch, token]);
 
   // Joining room on mounting
   useEffect(() => {
     if (!chatUser) return;
 
     socket.emit('joinRoom', {
-      userId: currentUser._id,
-      recipientId: chatUser._id,
+      userId: currentUser?._id,
+      recipientId: chatUser?._id,
     });
-  }, [chatUser, currentUser._id]);
+  }, [chatUser, currentUser?._id]);
 
   // Handling typing state for recipient
   useEffect(() => {
     socket.on('typing', ({ recipientId }) => {
-      if (recipientId === currentUser._id) setIsTyping(true);
+      if (recipientId === currentUser?._id) setIsTyping(true);
     });
 
     socket.on('stopTyping', ({ recipientId }) => {
-      if (recipientId === currentUser._id) setIsTyping(false);
+      if (recipientId === currentUser?._id) setIsTyping(false);
     });
-  }, [currentUser._id]);
+  }, [currentUser?._id]);
 
   // Listening on receive message
   useEffect(() => {
     socket.on('receiveMessage', ({ recipientId }) => {
-      if (recipientId === currentUser._id) {
-        dispatch(getMessagesAsync(token, currentChat._id));
+      if (recipientId === currentUser?._id) {
+        dispatch(getMessagesAsync(token, currentChat?._id));
       }
     });
-  }, [currentChat._id, currentUser._id, dispatch, token]);
+  }, [currentChat?._id, currentUser?._id, dispatch, token]);
 
   // Scrolling ChatArea to its bottom when a new message is added
   useEffect(() => {
@@ -153,11 +155,16 @@ const SingleChat = () => {
     <>
       <Header>
         <BackIcon onClick={onBackButtonClick} />
-        <Avatar avatarType={AVATAR_TYPES.EXTRA_SMALL} />
+        <Avatar
+          avatarType={AVATAR_TYPES.EXTRA_SMALL}
+          imageSrc={
+            chatUser.profilePicture && getImageSrc(chatUser.profilePicture)
+          }
+        />
         <div>
           <Name>
             {chatUser
-              ? `${chatUser.firstName} ${chatUser.lastName}`
+              ? `${chatUser?.firstName} ${chatUser?.lastName}`
               : 'ShareSphere User'}
           </Name>
           {isTyping ? (
@@ -171,11 +178,11 @@ const SingleChat = () => {
       </Header>
       <Main>
         <ChatArea ref={chatAreaRef}>
-          {messages.map((message) =>
+          {messages?.map((message) =>
             message.sender === currentUser._id ? (
-              <MyChat key={message._id}>{message.content}</MyChat>
+              <MyChat key={message?._id}>{message?.content}</MyChat>
             ) : (
-              <OtherChat key={message._id}>{message.content}</OtherChat>
+              <OtherChat key={message?._id}>{message?.content}</OtherChat>
             )
           )}
         </ChatArea>

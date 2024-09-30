@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { LB16Styles } from '../../utils/typography/label.styles';
 
 import NotificationsSVG from '../../assets/icons/bell.svg?react';
 import AddPostSVG from '../../assets/icons/plus-square.svg?react';
@@ -11,6 +12,10 @@ export const Container = styled.main`
   margin-bottom: 74px;
   padding: ${({ theme }) => theme.spacing.s3};
 
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing.s3};
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     margin-bottom: 0;
   }
@@ -20,8 +25,6 @@ export const Header = styled.header`
   display: grid;
   grid-template-columns: 1fr repeat(2, max-content);
   column-gap: ${({ theme }) => theme.spacing.s2};
-
-  margin-bottom: ${({ theme }) => theme.spacing.s3};
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     display: none;
@@ -75,9 +78,23 @@ export const ContentContainer = styled.div`
 `;
 
 export const PostContainer = styled.div`
+  position: relative;
+
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing.s4};
   }
+`;
+
+export const NoPostText = styled.p`
+  ${LB16Styles}
+
+  color: ${({ theme }) => theme.color.gray.g5};
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const SearchUserContainer = styled.div`

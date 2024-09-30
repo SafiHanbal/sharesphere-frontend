@@ -11,6 +11,7 @@ import AddPost from './routes/add-post/add-post.component';
 import SearchUser from './routes/search-user/search-user.component';
 import SingleChat from './routes/single-chat/single-chat.component';
 import UserSettings from './routes/user-settings/user-settings.component';
+import SinglePost from './routes/single-post/single-post.component';
 
 import { selectCurrentChat } from './store/chat/chatSelector';
 
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/search-user" element={<SearchUser />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/add-post" element={<AddPost />} />
+        <Route path="/post/:postId" element={<SinglePost />} />
         <Route path="/user-settings" element={<UserSettings />} />
       </Route>
       <Route path="/account/:userId" element={<Profile />} />

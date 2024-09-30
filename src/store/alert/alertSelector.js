@@ -1,18 +1,18 @@
 import { createSelector } from 'reselect';
 
-const selectAlertReducer = (state) => state.alert;
+const selectAlertSlice = (state) => state.alert;
 
 export const selectIsAlertVisible = createSelector(
-  [selectAlertReducer],
+  [selectAlertSlice],
   (alertSlice) => alertSlice.isAlertVisible
 );
 
 export const selectAlertMessage = createSelector(
-  [selectAlertReducer],
+  [selectAlertSlice],
   (alertSlice) => alertSlice.alertMessage
 );
 
 export const selectAlertType = createSelector(
-  [selectAlertReducer],
+  [selectAlertSlice],
   (alertSlice) => alertSlice.alertType
 );

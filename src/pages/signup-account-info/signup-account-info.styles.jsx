@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import NextIconSVG from '../../assets/icons/arrow-right.svg?react';
 import { LB12Styles } from '../../utils/typography/label.styles';
+import NextIconSVG from '../../assets/icons/arrow-right.svg?react';
 
 export const Container = styled.div`
   & > *:not(:last-child) {

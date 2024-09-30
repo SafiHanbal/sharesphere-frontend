@@ -37,6 +37,7 @@ const FormInput = ({
   onChangeHandler,
   errorMsg,
   placeholder,
+
   ...otherProps
 }) => {
   const CustomInput = getInput(inputType);

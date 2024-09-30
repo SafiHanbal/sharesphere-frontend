@@ -31,11 +31,12 @@ import {
 } from './add-post.styles';
 
 const AddPost = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const fileInputRef = useRef(null);
   const loading = useSelector(selectLoading);
   const token = useSelector(selectToken);
+
   const [previewData, setPreviewData] = useState([]);
   const [images, setImages] = useState([]);
   const [caption, setCaption] = useState('');

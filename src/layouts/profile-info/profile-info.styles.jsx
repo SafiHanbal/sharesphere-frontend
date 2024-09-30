@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import AddPostIconSVG from '../../assets/icons/plus-square.SVG?react';
+import MenuIconSVG from '../../assets/icons/list.SVG?react';
+import ShareIconSVG from '../../assets/icons/share.SVG?react';
+import BackIconSVG from '../../assets/icons/arrow-left.SVG?react';
+
 import {
   PB12Styles,
   PB16Styles,
@@ -8,11 +13,6 @@ import {
   PR14Styles,
 } from '../../utils/typography/body.styles';
 import { H3Styles } from '../../utils/typography/heading.styles';
-
-import AddPostIconSvg from '../../assets/icons/plus-square.svg?react';
-import MenuIconSvg from '../../assets/icons/list.svg?react';
-import ShareIconSvg from '../../assets/icons/share.svg?react';
-import BackIconSvg from '../../assets/icons/arrow-left.svg?react';
 
 const Header = styled.header`
   background-color: ${({ theme }) => theme.color.nuetral.white};
@@ -41,7 +41,7 @@ export const UserName = styled.p`
   ${PB16Styles}
 `;
 
-export const BackIcon = styled(BackIconSvg)`
+export const BackIcon = styled(BackIconSVG)`
   & path {
     fill: ${({ theme }) => theme.color.gray.g9};
   }
@@ -51,13 +51,13 @@ export const AddPostLink = styled(Link)`
   height: 24px;
 `;
 
-export const AddPostIcon = styled(AddPostIconSvg)`
+export const AddPostIcon = styled(AddPostIconSVG)`
   & path {
     fill: ${({ theme }) => theme.color.gray.g9};
   }
 `;
 
-export const MenuIcon = styled(MenuIconSvg)`
+export const MenuIcon = styled(MenuIconSVG)`
   cursor: pointer;
 
   & path {
@@ -65,7 +65,7 @@ export const MenuIcon = styled(MenuIconSvg)`
   }
 `;
 
-export const ShareIcon = styled(ShareIconSvg)`
+export const ShareIcon = styled(ShareIconSVG)`
   margin-right: 0 !important;
   & path {
     fill: ${({ theme }) => theme.color.primary.dark};

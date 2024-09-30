@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { H4Styles } from '../../utils/typography/heading.styles';
 import { LB12Styles, LB14Styles } from '../../utils/typography/label.styles';
 
-import ImagesIconSrc from '../../assets/icons/images.svg?react';
+import ImagesIconSVG from '../../assets/icons/images.svg?react';
 
 export const Container = styled.div`
   max-width: 1200px;
@@ -81,7 +81,7 @@ export const InputContnetContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export const ImagesIcon = styled(ImagesIconSrc)`
+export const ImagesIcon = styled(ImagesIconSVG)`
   height: ${({ theme }) => theme.spacing.s6};
   width: ${({ theme }) => theme.spacing.s6};
   margin-bottom: ${({ theme }) => theme.spacing.s2};

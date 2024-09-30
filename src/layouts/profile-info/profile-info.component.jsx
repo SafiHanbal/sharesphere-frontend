@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import getImageSrc from '../../utils/getImageSrc';
+
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';
+
 import Alert from '../../components/alert/alert.component';
 import Avatar from '../../components/avatar/avatar.component';
 import Button from '../../components/button/button.component';
@@ -17,8 +20,6 @@ import {
   followUserAsync,
   unfollowUserAsync,
 } from '../../store/users/usersAction';
-
-import getImageSrc from '../../utils/getImageSrc';
 
 import {
   AccountHeader,
@@ -46,13 +47,19 @@ const ProfileInfo = ({ userId, user }) => {
   const navigate = useNavigate();
   const token = useSelector(selectToken);
   const isAlertVisible = useSelector(selectIsAlertVisible);
+
   const [isfollowing, setIsFollowing] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
 
   // Update following variable when a
   useEffect(() => {
-    setIsFollowing(user.isFollowing);
-  }, [user.isFollowing]);
+    setIsFollowing(user?.isFollowing);
+  }, [user?.isFollowing]);
+
+  useEffect(() => {
+    setFollowersCount(user?.followersCount);
+  }, [user?.followersCount]);
 
   const onMessageButtonClick = () => {
     dispatch(accessChatAsync(userId, token));
@@ -65,11 +72,14 @@ const ProfileInfo = ({ userId, user }) => {
   const onFollowButtonClick = () => {
     setIsFollowing(true);
 
+    setFollowersCount(followersCount + 1);
     dispatch(followUserAsync(token, userId));
   };
 
   const onUnfollowButtonClick = () => {
     setIsFollowing(false);
+
+    setFollowersCount(followersCount - 1);
     dispatch(unfollowUserAsync(token, userId));
   };
 
@@ -78,11 +88,11 @@ const ProfileInfo = ({ userId, user }) => {
     firstName,
     lastName,
     bio,
-    followersCount,
     following,
     postCount,
     profilePicture,
   } = user;
+
   return (
     <>
       {userId ? (
@@ -111,7 +121,7 @@ const ProfileInfo = ({ userId, user }) => {
         )}
         <Avatar
           avatarType={AVATAR_TYPES.LARGE}
-          imageSrc={getImageSrc(profilePicture)}
+          imageSrc={profilePicture && getImageSrc(profilePicture)}
         />
         <Name>
           <span>
@@ -166,8 +176,6 @@ const ProfileInfo = ({ userId, user }) => {
 
         <Line />
       </InfoContainer>
-
-      {/* <button onClick={() => dispatch(logoutUserAsync(token))}>Logout</button> */}
     </>
   );
 };

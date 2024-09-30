@@ -1,5 +1,6 @@
-import { AVATAR_TYPES } from './avatar.types';
 import DefaultProfilePictureSRC from '../../assets/images/default-profile-picture.png';
+
+import { AVATAR_TYPES } from './avatar.types';
 
 import {
   ExtraSmallAvatar,

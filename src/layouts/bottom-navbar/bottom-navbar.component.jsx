@@ -15,6 +15,7 @@ import {
 
 const BottomNavbar = () => {
   const href = useHref();
+
   return (
     <Nav>
       <NavItem to="/">

@@ -28,7 +28,7 @@ const SignUpAccountInfo = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const loading = useSelector(selectLoading);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   const successHandler = () => {
     formik.resetForm();
@@ -43,7 +43,9 @@ const SignUpAccountInfo = () => {
       bio: Yup.string().required('Bio is required.'),
     }),
     onSubmit() {
-      dispatch(updateUserAsync(token, user._id, formik.values, successHandler));
+      dispatch(
+        updateUserAsync(token, currentUser?._id, formik.values, successHandler)
+      );
     },
   });
 

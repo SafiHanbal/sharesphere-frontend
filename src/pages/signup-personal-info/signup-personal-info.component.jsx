@@ -29,7 +29,7 @@ const SignUpPersonalInfo = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const loading = useSelector(selectLoading);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   const successHandler = () => {
     formik.resetForm();
@@ -48,7 +48,9 @@ const SignUpPersonalInfo = () => {
       dateOfBirth: Yup.string().required('Date of Birth is required.'),
     }),
     onSubmit() {
-      dispatch(updateUserAsync(token, user._id, formik.values, successHandler));
+      dispatch(
+        updateUserAsync(token, currentUser?._id, formik.values, successHandler)
+      );
     },
   });
 

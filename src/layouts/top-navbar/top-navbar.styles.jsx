@@ -51,6 +51,8 @@ export const NavItems = styled.nav`
 `;
 
 export const NavItem = styled(Link)`
+  max-height: 36px;
+  text-decoration: none;
   cursor: pointer;
 `;
 

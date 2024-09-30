@@ -4,26 +4,27 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import GoogleSVG from '../../assets/icons/google.svg?react';
+import FacebookSVG from '../../assets/icons/facebook.svg?react';
+
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';
+
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
 import Alert from '../../components/alert/alert.component';
 import Line from '../../components/line/line.component';
 
-import GoogleSVG from '../../assets/icons/google.svg?react';
-import FacebookSVG from '../../assets/icons/facebook.svg?react';
-
-import {
-  loginUserAsync,
-  loginWithGoogleAsync,
-  loginWithFacebookAsync,
-} from '../../store/user/userAction';
 import {
   selectLoading,
   selectUser,
   selectActionTarget,
 } from '../../store/user/userSelector';
+import {
+  loginUserAsync,
+  loginWithGoogleAsync,
+  loginWithFacebookAsync,
+} from '../../store/user/userAction';
 
 import {
   Container,
@@ -41,11 +42,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const actionTarget = useSelector(selectActionTarget);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   useEffect(() => {
-    if (user) navigate('/');
-  }, [navigate, user]);
+    if (currentUser) navigate('/');
+  }, [navigate, currentUser]);
 
   const formik = useFormik({
     initialValues: {

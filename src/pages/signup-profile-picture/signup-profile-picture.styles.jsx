@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import SaveIconSVG from '../../assets/icons/floppy.svg?react';
 import { PB14Styles } from '../../utils/typography/body.styles';
 import { LB12Styles } from '../../utils/typography/label.styles';
+
+import SaveIconSVG from '../../assets/icons/floppy.svg?react';
 
 export const Container = styled.div`
   & > *:not(:last-child) {
