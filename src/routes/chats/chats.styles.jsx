@@ -34,11 +34,13 @@ export const Container = styled.div`
 `;
 
 export const ChatList = styled.div`
-  padding: ${({ theme }) => theme.spacing.s3};
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     border-right: 1px solid ${({ theme }) => theme.color.gray.g3};
   }
+`;
+
+export const ListHeader = styled.div`
+  padding: ${({ theme }) => theme.spacing.s3};
 
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing.s3};
@@ -47,6 +49,29 @@ export const ChatList = styled.div`
 
 export const Heading = styled.h4`
   ${H4Styles}
+`;
+
+export const UserListContainer = styled.div`
+  height: calc(${({ theme }) => theme.visibleHeight} - 226px);
+  padding: ${({ theme }) => theme.spacing.s3};
+  padding-top: 0;
+  overflow: scroll;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 1px;
+    height: 0;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.color.gray.g4};
+  }
 `;
 
 export const SingleChatContainer = styled.div`

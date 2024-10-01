@@ -5,6 +5,7 @@ import {
   endFetch,
   getChatListSuccess,
   setCurrentChat,
+  clearCurrentChat,
   getMessagesSuccess,
   sendMessageSuccess,
 } from './chatSlice';
@@ -29,6 +30,8 @@ export const getChatListAsync = (token) => async (dispatch) => {
 
 export const accessChatAsync = (userId, token) => async (dispatch) => {
   dispatch(initFetch());
+  dispatch(clearCurrentChat());
+
   try {
     const config = {
       headers: { Authorization: `Bearer ${token}` },

@@ -8,6 +8,7 @@ import { PB14Styles, PR12Styles } from '../../utils/typography/body.styles';
 import { LR14Styles } from '../../utils/typography/label.styles';
 
 export const Header = styled.header`
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray.g5};
   background-color: ${({ theme }) => theme.color.nuetral.white};
   padding: ${({ theme }) => theme.spacing.s3} ${({ theme }) => theme.spacing.s4};
   box-shadow: ${({ theme }) => theme.effect.shadow.offset.sl};
@@ -65,11 +66,11 @@ export const AudioCallIcon = styled(AudioCallSVG)`
 `;
 
 export const Main = styled.div`
-  height: calc(${({ theme }) => theme.visibleHeight} - 68px);
+  height: calc(${({ theme }) => theme.visibleHeight} - 69px);
 `;
 
 export const ChatArea = styled.div`
-  height: calc(${({ theme }) => theme.visibleHeight} - 140px);
+  height: calc(${({ theme }) => theme.visibleHeight} - 141px);
   padding: ${({ theme }) => theme.spacing.s3};
   padding-bottom: 0;
 

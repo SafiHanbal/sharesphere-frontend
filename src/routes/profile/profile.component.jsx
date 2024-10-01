@@ -22,6 +22,7 @@ import {
   PostData,
   LikesCount,
   LinkText,
+  InvisibleBox,
 } from './profile.styles';
 
 const Profile = () => {
@@ -53,6 +54,8 @@ const Profile = () => {
     setUser(accountUser);
   }, [accountUser]);
 
+  console.log(href);
+
   return (
     <>
       {href !== '/profile' && <TopNavbar />}
@@ -78,6 +81,7 @@ const Profile = () => {
             <NoPostText>User uploaded zero post</NoPostText>
           )}
         </Posts>
+        {href === '/profile' && <InvisibleBox />}
       </Container>
     </>
   );

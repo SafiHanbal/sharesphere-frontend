@@ -56,7 +56,7 @@ const PostDisplay = ({ post, commentClickHandler }) => {
     images,
     caption,
     createdAt,
-    user: { firstName, lastName, profilePicture },
+    user: { _id: userId, firstName, lastName, profilePicture },
   } = post;
 
   return (
@@ -64,6 +64,7 @@ const PostDisplay = ({ post, commentClickHandler }) => {
       <HeaderContainer>
         <UsersListItem
           type="post"
+          link={`/account/${userId}`}
           avatar={profilePicture && getImageSrc(profilePicture)}
           name={`${firstName} ${lastName}`}
           moreInfo={getFormattedTime(createdAt)}

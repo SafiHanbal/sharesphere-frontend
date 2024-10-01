@@ -14,6 +14,10 @@ import {
 } from '../../utils/typography/body.styles';
 import { H3Styles } from '../../utils/typography/heading.styles';
 
+export const Container = styled.div`
+  position: relative;
+`;
+
 const Header = styled.header`
   background-color: ${({ theme }) => theme.color.nuetral.white};
   padding: ${({ theme }) => theme.spacing.s3} ${({ theme }) => theme.spacing.s4};
@@ -79,6 +83,11 @@ export const InfoContainer = styled.div`
 
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing.s3};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
+    position: sticky;
+    top: 100px;
   }
 `;
 

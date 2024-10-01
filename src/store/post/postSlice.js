@@ -12,7 +12,7 @@ const postSlice = createSlice({
   name: 'post',
   initialState: INITIAL_STATE,
   reducers: {
-    initializeAsyncFunc: (state, action) => {
+    initializeAsyncFunc(state, action) {
       state.loading = true;
       state.actionTarget = action.payload;
     },
@@ -20,12 +20,12 @@ const postSlice = createSlice({
       state.loading = false;
     },
 
-    getPostListSuccess: (state, action) => {
+    getPostListSuccess(state, action) {
       state.loading = false;
       state.postList = action.payload;
     },
 
-    getPostSuccess: (state, action) => {
+    getPostSuccess(state, action) {
       state.loading = false;
       state.post = action.payload;
     },

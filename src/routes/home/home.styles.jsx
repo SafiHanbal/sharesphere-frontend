@@ -80,8 +80,14 @@ export const ContentContainer = styled.div`
 export const PostContainer = styled.div`
   position: relative;
 
+  min-height: calc(${({ theme }) => theme.visibleHeight} - 74px);
+
   & > *:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing.s4};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
+    min-height: calc(${({ theme }) => theme.visibleHeight} - 100px);
   }
 `;
 

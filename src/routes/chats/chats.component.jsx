@@ -12,13 +12,16 @@ import {
   selectCurrentChat,
 } from '../../store/chat/chatSelector';
 import { getChatListAsync } from '../../store/chat/chatAction';
+import { clearCurrentChat } from '../../store/chat/chatSlice';
 
 import {
   Container,
   Heading,
   ChatList,
+  UserListContainer,
   SingleChatContainer,
   NoChatText,
+  ListHeader,
 } from './chats.styles';
 
 const Chats = () => {
@@ -32,7 +35,14 @@ const Chats = () => {
   const [userList, setUserList] = useState([]);
   const [filteredUserList, setFilteredUserList] = useState([]);
 
+  // Clear current chat on component unmount
   useEffect(() => {
+    return () => dispatch(clearCurrentChat());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!token) return;
+
     dispatch(getChatListAsync(token));
   }, [dispatch, token]);
 
@@ -77,15 +87,22 @@ const Chats = () => {
   return (
     <Container>
       <ChatList>
-        <FormInput
-          type="search"
-          inputType={INPUT_TYPES.SEARCH}
-          placeholder="Search Chats"
-          onChangeHandler={onChangeHandler}
-        />
+        <ListHeader>
+          <FormInput
+            type="search"
+            inputType={INPUT_TYPES.SEARCH}
+            placeholder="Search Chats"
+            onChangeHandler={onChangeHandler}
+          />
 
-        <Heading>Chats</Heading>
-        {chatList.length > 0 && <UsersList usersList={filteredUserList} />}
+          <Heading>Chats</Heading>
+        </ListHeader>
+
+        {chatList.length > 0 && (
+          <UserListContainer>
+            <UsersList usersList={filteredUserList} />
+          </UserListContainer>
+        )}
       </ChatList>
 
       <SingleChatContainer>

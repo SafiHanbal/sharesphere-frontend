@@ -50,7 +50,12 @@ const TopNavbar = () => {
           </NavItem>
 
           <MenuIcon onClick={toggleDropdownActive} />
-          {dropdownActive && <MenuDropdown />}
+          {dropdownActive && (
+            <MenuDropdown
+              isVisible={dropdownActive}
+              setIsVisible={setDropdownActive}
+            />
+          )}
         </NavItems>
       </Nav>
     </Container>

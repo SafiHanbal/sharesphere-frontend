@@ -32,6 +32,7 @@ const Home = () => {
   const postList = useSelector(selectPostList);
 
   useEffect(() => {
+    if (!token) return;
     dispatch(getPostListAsync(token));
   }, [dispatch, token]);
 

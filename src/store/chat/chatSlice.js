@@ -26,6 +26,10 @@ const chatSlice = createSlice({
       state.currentChat = action.payload;
     },
 
+    clearCurrentChat(state) {
+      state.currentChat = null;
+    },
+
     getMessagesSuccess(state, action) {
       state.loading = false;
       state.messages = action.payload;
@@ -43,6 +47,7 @@ export const {
   endFetch,
   getChatListSuccess,
   setCurrentChat,
+  clearCurrentChat,
   getMessagesSuccess,
   sendMessageSuccess,
 } = chatSlice.actions;

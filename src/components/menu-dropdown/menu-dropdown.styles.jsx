@@ -15,6 +15,7 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.color.nuetral.white};
   box-shadow: ${({ theme }) => theme.effect.shadow.default.md};
   border-radius: ${({ theme }) => theme.spacing.s1};
+  z-index: 3;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     top: 54px;

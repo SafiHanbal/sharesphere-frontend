@@ -73,3 +73,12 @@ export const LinkText = styled.p`
 
   text-decoration: underline;
 `;
+
+export const InvisibleBox = styled.div`
+  width: 100%;
+  height: 74px;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
+    display: none;
+  }
+`;

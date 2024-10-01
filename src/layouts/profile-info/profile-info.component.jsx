@@ -22,6 +22,7 @@ import {
 } from '../../store/users/usersAction';
 
 import {
+  Container,
   AccountHeader,
   ProfileHeader,
   AddPostLink,
@@ -83,6 +84,10 @@ const ProfileInfo = ({ userId, user }) => {
     dispatch(unfollowUserAsync(token, userId));
   };
 
+  const onEditProfileClick = () => {
+    navigate('/user-settings');
+  };
+
   const {
     username,
     firstName,
@@ -94,7 +99,7 @@ const ProfileInfo = ({ userId, user }) => {
   } = user;
 
   return (
-    <>
+    <Container>
       {userId ? (
         <AccountHeader>
           <BackIcon onClick={() => navigate(-1)} />
@@ -109,7 +114,12 @@ const ProfileInfo = ({ userId, user }) => {
             <AddPostIcon />
           </AddPostLink>
           <MenuIcon onClick={toggleDropdownActive} />
-          {dropdownActive && <MenuDropdown />}
+          {dropdownActive && (
+            <MenuDropdown
+              isVisible={dropdownActive}
+              setIsVisible={setDropdownActive}
+            />
+          )}
         </ProfileHeader>
       )}
 
@@ -165,7 +175,10 @@ const ProfileInfo = ({ userId, user }) => {
           </AccountButtonContainer>
         ) : (
           <ProfileButtonContainer>
-            <Button buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}>
+            <Button
+              buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}
+              onClick={onEditProfileClick}
+            >
               Edit Profile
             </Button>
             <Button buttonType={BUTTON_TYPES.PRIMARY_SMALL_OUTLINE}>
@@ -176,7 +189,7 @@ const ProfileInfo = ({ userId, user }) => {
 
         <Line />
       </InfoContainer>
-    </>
+    </Container>
   );
 };
 

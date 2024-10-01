@@ -64,6 +64,8 @@ const SingleChat = () => {
 
   // Getting all messages
   useEffect(() => {
+    if (!token) return;
+
     dispatch(getMessagesAsync(token, currentChat?._id));
   }, [currentChat?._id, dispatch, token]);
 
@@ -116,17 +118,19 @@ const SingleChat = () => {
     },
 
     onSubmit: () => {
-      dispatch(sendMessageAsync(token, currentChat._id, formik.values.content));
+      dispatch(
+        sendMessageAsync(token, currentChat?._id, formik.values.content)
+      );
       formik.resetForm();
 
       socket.emit('sendMessage', {
-        userId: currentUser._id,
-        recipientId: chatUser._id,
+        userId: currentUser?._id,
+        recipientId: chatUser?._id,
       });
 
       socket.emit('stopTyping', {
-        userId: currentUser._id,
-        recipientId: chatUser._id,
+        userId: currentUser?._id,
+        recipientId: chatUser?._id,
       });
     },
   });
@@ -135,8 +139,8 @@ const SingleChat = () => {
     formik.handleChange(event);
 
     socket.emit('typing', {
-      userId: currentUser._id,
-      recipientId: chatUser._id,
+      userId: currentUser?._id,
+      recipientId: chatUser?._id,
     });
 
     if (timerRef.current) {
@@ -145,8 +149,8 @@ const SingleChat = () => {
 
     timerRef.current = setTimeout(() => {
       socket.emit('stopTyping', {
-        userId: currentUser._id,
-        recipientId: chatUser._id,
+        userId: currentUser?._id,
+        recipientId: chatUser?._id,
       });
     }, 2000);
   };
@@ -158,7 +162,7 @@ const SingleChat = () => {
         <Avatar
           avatarType={AVATAR_TYPES.EXTRA_SMALL}
           imageSrc={
-            chatUser.profilePicture && getImageSrc(chatUser.profilePicture)
+            chatUser?.profilePicture && getImageSrc(chatUser?.profilePicture)
           }
         />
         <div>
@@ -179,7 +183,7 @@ const SingleChat = () => {
       <Main>
         <ChatArea ref={chatAreaRef}>
           {messages?.map((message) =>
-            message.sender === currentUser._id ? (
+            message.sender === currentUser?._id ? (
               <MyChat key={message?._id}>{message?.content}</MyChat>
             ) : (
               <OtherChat key={message?._id}>{message?.content}</OtherChat>
