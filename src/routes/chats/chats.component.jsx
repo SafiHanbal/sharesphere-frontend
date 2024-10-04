@@ -12,7 +12,6 @@ import {
   selectCurrentChat,
 } from '../../store/chat/chatSelector';
 import { getChatListAsync } from '../../store/chat/chatAction';
-import { clearCurrentChat } from '../../store/chat/chatSlice';
 
 import {
   Container,
@@ -34,11 +33,6 @@ const Chats = () => {
 
   const [userList, setUserList] = useState([]);
   const [filteredUserList, setFilteredUserList] = useState([]);
-
-  // Clear current chat on component unmount
-  useEffect(() => {
-    return () => dispatch(clearCurrentChat());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!token) return;
@@ -83,6 +77,7 @@ const Chats = () => {
 
     setFilteredUserList(newUserList);
   };
+  console.log(filteredUserList);
 
   return (
     <Container>

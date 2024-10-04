@@ -25,8 +25,8 @@ export const SocialLogin = styled.div`
     width: 100%;
   }
 
-  & > button:not(:last-child) {
-    margin-bottom: 16px;
+  & > *:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing.s3};
   }
 `;
 

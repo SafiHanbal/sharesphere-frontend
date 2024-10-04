@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { useGoogleLogin } from '@react-oauth/google';
+import useFacebookLogin from '../../utils/hooks/useFacebookLogin';
+
 import GoogleSVG from '../../assets/icons/google.svg?react';
 import FacebookSVG from '../../assets/icons/facebook.svg?react';
 
@@ -22,9 +25,10 @@ import {
 } from '../../store/user/userSelector';
 import {
   loginUserAsync,
-  loginWithGoogleAsync,
   loginWithFacebookAsync,
+  loginWithGoogleAsync,
 } from '../../store/user/userAction';
+import { showAlert } from '../../store/alert/alertAction';
 
 import {
   Container,
@@ -40,6 +44,7 @@ import {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const facebookLogin = useFacebookLogin(import.meta.env.VITE_FACEBOOK_APP_ID);
   const loading = useSelector(selectLoading);
   const actionTarget = useSelector(selectActionTarget);
   const currentUser = useSelector(selectUser);
@@ -68,17 +73,27 @@ const Login = () => {
     },
   });
 
-  const loginWithGoogleHandler = () => {
-    dispatch(loginWithGoogleAsync());
-  };
+  const loginWithGoogleHandler = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      const accessToken = credentialResponse.access_token;
+
+      dispatch(loginWithGoogleAsync(accessToken));
+    },
+    onError: () => {
+      dispatch(showAlert('Login with google failed.'));
+    },
+  });
 
   const loginWithFacebookHandler = () => {
-    dispatch(loginWithFacebookAsync());
+    facebookLogin((accessToken) => {
+      dispatch(loginWithFacebookAsync(accessToken));
+    });
   };
 
   return (
     <Container>
       <SocialLogin>
+        {actionTarget !== 'login' && <Alert />}
         <Button
           buttonType={BUTTON_TYPES.SECONDARY_SMALL_FILL}
           onClick={loginWithGoogleHandler}
@@ -86,7 +101,7 @@ const Login = () => {
         >
           <GoogleSVG />
           {loading && actionTarget === 'login-with-google' ? (
-            <span>Loging In</span>
+            <span>Loging In With Google</span>
           ) : (
             <span>Login With Google</span>
           )}
@@ -110,7 +125,7 @@ const Login = () => {
       <Form onSubmit={formik.handleSubmit}>
         <Heading>Login With Email and Password</Heading>
 
-        <Alert />
+        {actionTarget === 'login' && <Alert />}
 
         <FormInput
           label="Email"

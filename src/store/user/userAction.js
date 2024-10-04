@@ -2,12 +2,11 @@ import axios from 'axios';
 import { ALERT_TYPES } from '../../components/alert/alert.types';
 import { showAlert } from '../alert/alertAction';
 
+import { clearCurrentChat } from '../chat/chatSlice';
 import {
   initializeAsyncFunc,
   endAsyncFunc,
   loginUserSuccess,
-  loginWithGoogleSuccess,
-  loginWithFacebookSuccess,
   signUpUserSuccess,
   logoutUserSuccess,
   resetPasswordSuccess,
@@ -39,22 +38,28 @@ export const loginUserAsync =
     }
   };
 
-export const loginWithGoogleAsync = () => async (dispatch) => {
+export const loginWithGoogleAsync = (accessToken) => async (dispatch) => {
   dispatch(initializeAsyncFunc('login-with-google'));
 
   try {
-    dispatch(loginWithGoogleSuccess());
+    const url = `${baseUrl}users/google-login`;
+    const { data } = await axios.post(url, { accessToken });
+
+    dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
   } catch (err) {
     dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
   }
 };
 
-export const loginWithFacebookAsync = () => async (dispatch) => {
+export const loginWithFacebookAsync = (accessToken) => async (dispatch) => {
   dispatch(initializeAsyncFunc('login-with-facebook'));
 
   try {
-    dispatch(loginWithFacebookSuccess());
+    const url = `${baseUrl}users/facebook-login`;
+    const { data } = await axios.post(url, { accessToken });
+
+    dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
   } catch (err) {
     dispatch(endAsyncFunc());
     dispatch(showAlert(err.response.data.message));
@@ -91,6 +96,7 @@ export const signUpUserAsync =
 
 export const logoutUserAsync = (token) => async (dispatch) => {
   dispatch(initializeAsyncFunc('logout'));
+
   try {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -99,6 +105,7 @@ export const logoutUserAsync = (token) => async (dispatch) => {
     const url = `${baseUrl}users/logout`;
     await axios.get(url, config);
 
+    dispatch(clearCurrentChat());
     dispatch(logoutUserSuccess());
     dispatch(showAlert('Logout successfully!', ALERT_TYPES.SUCCESS));
   } catch (err) {

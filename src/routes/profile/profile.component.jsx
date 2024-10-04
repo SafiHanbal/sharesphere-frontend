@@ -54,8 +54,6 @@ const Profile = () => {
     setUser(accountUser);
   }, [accountUser]);
 
-  console.log(href);
-
   return (
     <>
       {href !== '/profile' && <TopNavbar />}

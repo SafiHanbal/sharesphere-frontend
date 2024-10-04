@@ -15,7 +15,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
-  // import.meta.env.VITE_NODE_ENV === 'development' && logger,
+  import.meta.env.VITE_NODE_ENV === 'development' && logger,
   thunk,
 ].filter(Boolean);
 

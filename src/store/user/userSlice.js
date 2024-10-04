@@ -28,14 +28,6 @@ const userSlice = createSlice({
       state.user = action.payload.user;
     },
 
-    loginWithGoogleSuccess(state) {
-      state.loading = false;
-    },
-
-    loginWithFacebookSuccess(state) {
-      state.loading = false;
-    },
-
     signUpUserSuccess(state, action) {
       state.loading = false;
       state.token = action.payload.token;
@@ -64,8 +56,6 @@ export const {
   initializeAsyncFunc,
   endAsyncFunc,
   loginUserSuccess,
-  loginWithGoogleSuccess,
-  loginWithFacebookSuccess,
   signUpUserSuccess,
   logoutUserSuccess,
   resetPasswordSuccess,

@@ -16,7 +16,7 @@ import {
   selectMessages,
 } from '../../store/chat/chatSelector';
 
-import { setCurrentChat } from '../../store/chat/chatSlice';
+import { clearMessages, setCurrentChat } from '../../store/chat/chatSlice';
 import {
   getMessagesAsync,
   sendMessageAsync,
@@ -66,6 +66,7 @@ const SingleChat = () => {
   useEffect(() => {
     if (!token) return;
 
+    dispatch(clearMessages());
     dispatch(getMessagesAsync(token, currentChat?._id));
   }, [currentChat?._id, dispatch, token]);
 

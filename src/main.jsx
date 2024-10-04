@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import theme from './theme/theme.jsx';
 import { store, persistor } from './store/store.js';
@@ -17,7 +18,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
-            <App />
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            >
+              <App />
+            </GoogleOAuthProvider>
           </ThemeProvider>
         </BrowserRouter>
       </PersistGate>

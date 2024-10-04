@@ -35,6 +35,11 @@ const chatSlice = createSlice({
       state.messages = action.payload;
     },
 
+    clearMessages(state) {
+      state.loading = false;
+      state.messages = [];
+    },
+
     sendMessageSuccess(state, action) {
       state.loading = false;
       state.messages = [...state.messages, action.payload];
@@ -49,6 +54,7 @@ export const {
   setCurrentChat,
   clearCurrentChat,
   getMessagesSuccess,
+  clearMessages,
   sendMessageSuccess,
 } = chatSlice.actions;
 

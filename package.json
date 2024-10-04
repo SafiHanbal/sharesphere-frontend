@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@greatsumini/react-facebook-login": "^3.3.3",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.3",
     "formik": "^2.4.6",
@@ -25,7 +27,6 @@
     "reselect": "^5.1.1",
     "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.12",
-    "vite-plugin-svgr": "^4.2.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
@@ -36,6 +37,8 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-mkcert": "^1.17.6",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }
