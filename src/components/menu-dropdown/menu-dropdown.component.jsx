@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useSocket } from '../../hooks/useSocket';
 
 import Line from '../line/line.component';
 
@@ -19,9 +20,10 @@ const MenuDropdown = ({ isVisible, setIsVisible }) => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const dropdownRef = useRef(null);
+  const { socketLogout } = useSocket();
 
   const logoutHandler = () => {
-    dispatch(logoutUserAsync(token));
+    dispatch(logoutUserAsync(token, socketLogout));
   };
 
   const handleClickOutside = (event) => {

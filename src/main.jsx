@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { SocketProvider } from './context/socketContext.jsx';
 
 import theme from './theme/theme.jsx';
 import { store, persistor } from './store/store.js';
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <GoogleOAuthProvider
               clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
             >
-              <App />
+              <SocketProvider>
+                <App />
+              </SocketProvider>
             </GoogleOAuthProvider>
           </ThemeProvider>
         </BrowserRouter>

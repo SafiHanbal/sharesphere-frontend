@@ -7,6 +7,11 @@ export const selectLoading = createSelector(
   (chatSlice) => chatSlice.loading
 );
 
+export const selectTyping = createSelector(
+  [selectChatSlice],
+  (chatSlice) => chatSlice.typing
+);
+
 export const selectChatList = createSelector(
   [selectChatSlice],
   (chatSlice) => chatSlice.chatList

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import getImageSrc from '../../utils/getImageSrc';
+import getImageSrc from '../../utils/functions/getImageSrc';
 
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import { BUTTON_TYPES } from '../../components/button/button.types';

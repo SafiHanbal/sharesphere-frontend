@@ -29,7 +29,6 @@ const UsersListItem = ({
   const currentUser = useSelector(selectUser);
 
   const onClickHandler = () => {
-    console.log('going to call access chat');
     dispatch(accessChatAsync(userId, token));
   };
 

@@ -6,8 +6,9 @@ import {
   getChatListSuccess,
   setCurrentChat,
   clearCurrentChat,
-  getMessagesSuccess,
-  sendMessageSuccess,
+  setMessages,
+  clearMessages,
+  pushMessage,
 } from './chatSlice';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -48,6 +49,7 @@ export const accessChatAsync = (userId, token) => async (dispatch) => {
 
 export const getMessagesAsync = (token, chatId) => async (dispatch) => {
   dispatch(initFetch());
+  dispatch(clearMessages());
   try {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -56,24 +58,24 @@ export const getMessagesAsync = (token, chatId) => async (dispatch) => {
     const url = `${baseUrl}messages/${chatId}`;
     const { data } = await axios.get(url, config);
 
-    dispatch(getMessagesSuccess(data.data.messages));
+    dispatch(setMessages(data.data.messages));
   } catch (err) {
     dispatch(endFetch());
   }
 };
 
 export const sendMessageAsync =
-  (token, chatId, content) => async (dispatch) => {
+  (token, chatId, message) => async (dispatch) => {
     dispatch(initFetch());
     try {
+      dispatch(pushMessage(message));
+
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
 
       const url = `${baseUrl}messages`;
-      const { data } = await axios.post(url, { chatId, content }, config);
-
-      dispatch(sendMessageSuccess(data.data.message));
+      await axios.post(url, { chatId, content: message.content }, config);
     } catch (err) {
       dispatch(endFetch());
     }

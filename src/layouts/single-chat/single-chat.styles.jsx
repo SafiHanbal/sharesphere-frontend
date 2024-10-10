@@ -72,11 +72,15 @@ export const Main = styled.div`
 export const ChatArea = styled.div`
   height: calc(${({ theme }) => theme.visibleHeight} - 141px);
   padding: ${({ theme }) => theme.spacing.s3};
-  padding-bottom: 0;
+  padding-bottom: 2px;
 
   display: flex;
   flex-direction: column;
   overflow: scroll;
+
+  & > p:not(:last-child) {
+    margin-bottom: ${({ theme }) => theme.spacing.s2};
+  }
 
   /* width */
   &::-webkit-scrollbar {
@@ -104,7 +108,6 @@ const ChatText = styled.p`
 
   padding: ${({ theme }) => theme.spacing.s2};
   border-radius: ${({ theme }) => theme.spacing.s1};
-  margin-bottom: ${({ theme }) => theme.spacing.s2};
   box-shadow: ${({ theme }) => theme.effect.shadow.default.sd};
   max-width: 30ch;
 

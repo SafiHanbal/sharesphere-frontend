@@ -19,6 +19,10 @@ export const Container = styled.main`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
     margin-bottom: 0;
   }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
+    padding: ${({ theme }) => theme.spacing.s3} 0;
+  }
 `;
 
 export const Header = styled.header`
@@ -61,7 +65,7 @@ export const LineContainer = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-  max-width: 1050px;
+  max-width: 1200px;
   margin: 0 auto;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
@@ -86,7 +90,14 @@ export const PostContainer = styled.div`
     margin-bottom: ${({ theme }) => theme.spacing.s4};
   }
 
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabPort}) {
+    width: 550px;
+    margin: 0 auto;
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tabLand}) {
+    margin: 0;
+    width: auto;
     min-height: calc(${({ theme }) => theme.visibleHeight} - 100px);
   }
 `;

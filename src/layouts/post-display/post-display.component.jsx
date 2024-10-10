@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import getImageSrc, { IMAGE_FOLDER } from '../../utils/getImageSrc';
-import getFormattedTime from '../../utils/getFormattedTime';
-import getSingularOrPlural from '../../utils/getSingularOrPlural';
+import getImageSrc, { IMAGE_FOLDER } from '../../utils/functions/getImageSrc';
+import getFormattedTime from '../../utils/functions/getFormattedTime';
+import getSingularOrPlural from '../../utils/functions/getSingularOrPlural';
 
 import Line from '../../components/line/line.component';
 import UsersListItem from '../../components/users-list-item/users-list-item.component';

@@ -8,6 +8,7 @@ import NotificationsSVG from '../../assets/icons/bell.svg?react';
 import AddPostSVG from '../../assets/icons/plus-square.svg?react';
 import MenuSVG from '../../assets/icons/list.svg?react';
 
+// For white background color of top nav
 export const Container = styled.div`
   display: none;
 
@@ -30,6 +31,10 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
+    padding: ${({ theme }) => theme.spacing.s3} 0;
+  }
 `;
 
 export const Logo = styled.img`

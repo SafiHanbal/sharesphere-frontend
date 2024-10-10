@@ -4,6 +4,8 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState: {
     loading: false,
+    typing: false,
+
     chatList: [],
     currentChat: null,
     messages: [],
@@ -14,6 +16,9 @@ const chatSlice = createSlice({
     },
     endFetch(state) {
       state.loading = false;
+    },
+    setTyping(state, action) {
+      state.typing = action.payload;
     },
 
     getChatListSuccess(state, action) {
@@ -30,19 +35,17 @@ const chatSlice = createSlice({
       state.currentChat = null;
     },
 
-    getMessagesSuccess(state, action) {
+    setMessages(state, action) {
       state.loading = false;
       state.messages = action.payload;
     },
 
+    pushMessage(state, action) {
+      state.messages = [...state.messages, action.payload];
+    },
     clearMessages(state) {
       state.loading = false;
       state.messages = [];
-    },
-
-    sendMessageSuccess(state, action) {
-      state.loading = false;
-      state.messages = [...state.messages, action.payload];
     },
   },
 });
@@ -50,12 +53,13 @@ const chatSlice = createSlice({
 export const {
   initFetch,
   endFetch,
+  setTyping,
   getChatListSuccess,
   setCurrentChat,
   clearCurrentChat,
-  getMessagesSuccess,
+  setMessages,
+  pushMessage,
   clearMessages,
-  sendMessageSuccess,
 } = chatSlice.actions;
 
 export const chatReducer = chatSlice.reducer;

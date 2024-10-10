@@ -1,9 +1,8 @@
-import { io } from 'socket.io-client';
 import { useFormik } from 'formik';
-
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSocket } from '../../hooks/useSocket';
 
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import FormInput from '../../components/form-input/form-input.component';
@@ -12,15 +11,17 @@ import Avatar from '../../components/avatar/avatar.component';
 
 import { selectUser, selectToken } from '../../store/user/userSelector';
 import {
+  selectTyping,
   selectCurrentChat,
   selectMessages,
 } from '../../store/chat/chatSelector';
 
-import { clearMessages, setCurrentChat } from '../../store/chat/chatSlice';
+import { setCurrentChat } from '../../store/chat/chatSlice';
 import {
   getMessagesAsync,
   sendMessageAsync,
 } from '../../store/chat/chatAction';
+import { startCall } from '../../store/call/callAction';
 
 import {
   Header,
@@ -36,9 +37,8 @@ import {
   OtherChat,
   Form,
 } from './single-chat.styles';
-import getImageSrc from '../../utils/getImageSrc';
+import getImageSrc from '../../utils/functions/getImageSrc';
 
-const socket = io(import.meta.env.VITE_BACKEND_URL);
 const SingleChat = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,11 +47,14 @@ const SingleChat = () => {
   const token = useSelector(selectToken);
   const currentChat = useSelector(selectCurrentChat);
   const messages = useSelector(selectMessages);
+  const typing = useSelector(selectTyping);
 
   const timerRef = useRef(null);
   const chatAreaRef = useRef(null);
   const [chatUser, setChatUser] = useState(null);
-  const [isTyping, setIsTyping] = useState(false);
+
+  const { joinRoom, sendMessage, typingStart, typingEnd, startCallSocket } =
+    useSocket();
 
   // Setting chatUser to use in Header
   useEffect(() => {
@@ -66,7 +69,6 @@ const SingleChat = () => {
   useEffect(() => {
     if (!token) return;
 
-    dispatch(clearMessages());
     dispatch(getMessagesAsync(token, currentChat?._id));
   }, [currentChat?._id, dispatch, token]);
 
@@ -74,31 +76,10 @@ const SingleChat = () => {
   useEffect(() => {
     if (!chatUser) return;
 
-    socket.emit('joinRoom', {
-      userId: currentUser?._id,
-      recipientId: chatUser?._id,
-    });
-  }, [chatUser, currentUser?._id]);
+    joinRoom(chatUser?._id);
 
-  // Handling typing state for recipient
-  useEffect(() => {
-    socket.on('typing', ({ recipientId }) => {
-      if (recipientId === currentUser?._id) setIsTyping(true);
-    });
-
-    socket.on('stopTyping', ({ recipientId }) => {
-      if (recipientId === currentUser?._id) setIsTyping(false);
-    });
-  }, [currentUser?._id]);
-
-  // Listening on receive message
-  useEffect(() => {
-    socket.on('receiveMessage', ({ recipientId }) => {
-      if (recipientId === currentUser?._id) {
-        dispatch(getMessagesAsync(token, currentChat?._id));
-      }
-    });
-  }, [currentChat?._id, currentUser?._id, dispatch, token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatUser, currentUser]);
 
   // Scrolling ChatArea to its bottom when a new message is added
   useEffect(() => {
@@ -113,46 +94,65 @@ const SingleChat = () => {
     navigate('/chats');
   };
 
+  const onAudioCallStart = () => {
+    const caller = {
+      _id: currentUser?._id,
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      profilePicture: currentUser?.profilePicture,
+    };
+
+    dispatch(startCall(chatUser, 'Audio'));
+    startCallSocket(caller, chatUser?._id, 'Audio');
+  };
+
+  const onVideoCallStart = () => {
+    const caller = {
+      _id: currentUser?._id,
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      profilePicture: currentUser?.profilePicture,
+    };
+
+    dispatch(startCall(chatUser, 'Video'));
+    startCallSocket(caller, chatUser?._id, 'Video');
+  };
+
   const formik = useFormik({
     initialValues: {
       content: '',
     },
 
     onSubmit: () => {
-      dispatch(
-        sendMessageAsync(token, currentChat?._id, formik.values.content)
-      );
+      const newMessage = {
+        sender: currentUser?._id,
+        content: formik.values.content,
+      };
+
+      dispatch(sendMessageAsync(token, currentChat?._id, newMessage));
       formik.resetForm();
 
-      socket.emit('sendMessage', {
-        userId: currentUser?._id,
-        recipientId: chatUser?._id,
-      });
+      // Sending message through socket
+      sendMessage(chatUser?.id, newMessage);
 
-      socket.emit('stopTyping', {
-        userId: currentUser?._id,
-        recipientId: chatUser?._id,
-      });
+      // Stop typing when message is send
+      typingEnd(currentUser?._id, chatUser?._id);
     },
   });
 
   const onChangeHandler = (event) => {
     formik.handleChange(event);
 
-    socket.emit('typing', {
-      userId: currentUser?._id,
-      recipientId: chatUser?._id,
-    });
+    // Emit typing if there is no timeouts
+    if (!timerRef.current) typingStart(currentUser?._id, chatUser?._id);
 
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
+    // Clear previous timeout if content change
+    if (timerRef.current) clearTimeout(timerRef.current);
 
+    // Set timeout to emit stop typing
     timerRef.current = setTimeout(() => {
-      socket.emit('stopTyping', {
-        userId: currentUser?._id,
-        recipientId: chatUser?._id,
-      });
+      timerRef.current = null;
+      typingEnd(currentUser?._id, chatUser?._id);
     }, 2000);
   };
 
@@ -172,24 +172,26 @@ const SingleChat = () => {
               ? `${chatUser?.firstName} ${chatUser?.lastName}`
               : 'ShareSphere User'}
           </Name>
-          {isTyping ? (
+          {typing ? (
             <TypingText>typing...</TypingText>
           ) : (
             <ActiveStatus>Active 12:00PM</ActiveStatus>
           )}
         </div>
-        <VideoCallIcon />
-        <AudioCallIcon />
+        <VideoCallIcon onClick={onVideoCallStart} />
+        <AudioCallIcon onClick={onAudioCallStart} />
       </Header>
       <Main>
         <ChatArea ref={chatAreaRef}>
-          {messages?.map((message) =>
-            message.sender === currentUser?._id ? (
-              <MyChat key={message?._id}>{message?.content}</MyChat>
+          {messages?.map((message, idx) => {
+            const id = message?._id || idx;
+
+            return message?.sender === currentUser?._id ? (
+              <MyChat key={id}>{message?.content}</MyChat>
             ) : (
-              <OtherChat key={message?._id}>{message?.content}</OtherChat>
-            )
-          )}
+              <OtherChat key={id}> {message?.content}</OtherChat>
+            );
+          })}
         </ChatArea>
         <Form onSubmit={formik.handleSubmit}>
           <FormInput

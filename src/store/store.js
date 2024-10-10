@@ -9,13 +9,13 @@ import rootReducer from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'chat'],
+  whitelist: ['user', 'chat', 'call'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
-  import.meta.env.VITE_NODE_ENV === 'development' && logger,
+  // import.meta.env.VITE_NODE_ENV === 'development' && logger,
   thunk,
 ].filter(Boolean);
 

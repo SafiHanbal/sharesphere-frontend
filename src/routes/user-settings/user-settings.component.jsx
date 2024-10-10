@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import LogoSrc from '../../assets/logo/logo.png';
-import getImageSrc from '../../utils/getImageSrc';
+import getImageSrc from '../../utils/functions/getImageSrc';
 
 import { AVATAR_TYPES } from '../../components/avatar/avatar.types';
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';

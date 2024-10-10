@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import getImageSrc from '../../utils/getImageSrc';
+import getImageSrc from '../../utils/functions/getImageSrc';
 
 import UsersListItem from '../users-list-item/users-list-item.component';
 import Line from '../line/line.component';

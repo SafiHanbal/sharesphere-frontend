@@ -8,13 +8,13 @@ import { selectUser } from '../../store/user/userSelector';
 
 const SingleChat = () => {
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   useEffect(() => {
-    if (!user) navigate('/auth');
-  }, [navigate, user]);
+    if (!currentUser) navigate('/auth');
+  }, [navigate, currentUser]);
 
-  return user ? <SingleChatLayout /> : <></>;
+  return currentUser ? <SingleChatLayout /> : <></>;
 };
 
 export default SingleChat;

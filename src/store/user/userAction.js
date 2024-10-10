@@ -16,7 +16,7 @@ import {
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const loginUserAsync =
-  (userCredentials, resetForm) => async (dispatch) => {
+  (userCredentials, resetForm, socketLogin) => async (dispatch) => {
     dispatch(initializeAsyncFunc('login'));
     try {
       const { data } = await axios.post(
@@ -31,6 +31,7 @@ export const loginUserAsync =
         })
       );
       resetForm();
+      socketLogin(data.data.user._id);
       dispatch(showAlert('Login successfully!', ALERT_TYPES.SUCCESS));
     } catch (err) {
       dispatch(endAsyncFunc());
@@ -38,33 +39,39 @@ export const loginUserAsync =
     }
   };
 
-export const loginWithGoogleAsync = (accessToken) => async (dispatch) => {
-  dispatch(initializeAsyncFunc('login-with-google'));
+export const loginWithGoogleAsync =
+  (accessToken, socketLogin) => async (dispatch) => {
+    dispatch(initializeAsyncFunc('login-with-google'));
 
-  try {
-    const url = `${baseUrl}users/google-login`;
-    const { data } = await axios.post(url, { accessToken });
+    try {
+      const url = `${baseUrl}users/google-login`;
+      const { data } = await axios.post(url, { accessToken });
 
-    dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
-  } catch (err) {
-    dispatch(endAsyncFunc());
-    dispatch(showAlert(err.response.data.message));
-  }
-};
+      socketLogin(data.data.user._id);
+      dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
+      dispatch(showAlert('Login successfully!', ALERT_TYPES.SUCCESS));
+    } catch (err) {
+      dispatch(endAsyncFunc());
+      dispatch(showAlert(err.response.data.message));
+    }
+  };
 
-export const loginWithFacebookAsync = (accessToken) => async (dispatch) => {
-  dispatch(initializeAsyncFunc('login-with-facebook'));
+export const loginWithFacebookAsync =
+  (accessToken, socketLogin) => async (dispatch) => {
+    dispatch(initializeAsyncFunc('login-with-facebook'));
 
-  try {
-    const url = `${baseUrl}users/facebook-login`;
-    const { data } = await axios.post(url, { accessToken });
+    try {
+      const url = `${baseUrl}users/facebook-login`;
+      const { data } = await axios.post(url, { accessToken });
 
-    dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
-  } catch (err) {
-    dispatch(endAsyncFunc());
-    dispatch(showAlert(err.response.data.message));
-  }
-};
+      socketLogin(data.data.user._id);
+      dispatch(loginUserSuccess({ token: data.token, user: data.data.user }));
+      dispatch(showAlert('Login successfully!', ALERT_TYPES.SUCCESS));
+    } catch (err) {
+      dispatch(endAsyncFunc());
+      dispatch(showAlert(err.response.data.message));
+    }
+  };
 
 export const signUpUserAsync =
   (userCredentials, successHandler) => async (dispatch) => {
@@ -94,7 +101,7 @@ export const signUpUserAsync =
     }
   };
 
-export const logoutUserAsync = (token) => async (dispatch) => {
+export const logoutUserAsync = (token, socketLogout) => async (dispatch) => {
   dispatch(initializeAsyncFunc('logout'));
 
   try {
@@ -105,6 +112,7 @@ export const logoutUserAsync = (token) => async (dispatch) => {
     const url = `${baseUrl}users/logout`;
     await axios.get(url, config);
 
+    socketLogout();
     dispatch(clearCurrentChat());
     dispatch(logoutUserSuccess());
     dispatch(showAlert('Logout successfully!', ALERT_TYPES.SUCCESS));

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useSocket } from './hooks/useSocket';
 
 import Authentication from './routes/authentication/authentication.component';
 import Chats from './routes/chats/chats.component';
@@ -12,19 +13,27 @@ import SearchUser from './routes/search-user/search-user.component';
 import SingleChat from './routes/single-chat/single-chat.component';
 import UserSettings from './routes/user-settings/user-settings.component';
 import SinglePost from './routes/single-post/single-post.component';
+import Call from './routes/call/call.component';
 
-import { selectCurrentChat } from './store/chat/chatSelector';
+import { selectUser } from './store/user/userSelector';
+import { selectCallUser } from './store/call/callSelector';
 
 const App = () => {
   const navigate = useNavigate();
+  const currentUser = useSelector(selectUser);
+  const callUser = useSelector(selectCallUser);
+  const { socketReady, register } = useSocket();
 
-  const currentChat = useSelector(selectCurrentChat);
-
-  // Redirecting Small Screen to single chat route if ther is a current chat
+  // Register user on app mounting
   useEffect(() => {
-    if (window.innerWidth > 900 || !currentChat) return;
-    navigate(`/chats/${currentChat._id}`);
-  }, [currentChat, navigate]);
+    if (currentUser && socketReady) register(currentUser?._id);
+  }, [currentUser, socketReady]);
+
+  // Navigate to call route if there is any call user
+  useEffect(() => {
+    if (!callUser) return;
+    navigate('/call');
+  }, [callUser, navigate]);
 
   return (
     <Routes>
@@ -40,6 +49,7 @@ const App = () => {
       <Route path="/account/:userId" element={<Profile />} />
       <Route path="/chats/:chatId" element={<SingleChat />} />
       <Route path="/auth/*" element={<Authentication />} />
+      <Route path="/call" element={<Call />} />
     </Routes>
   );
 };

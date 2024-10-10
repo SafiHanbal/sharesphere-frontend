@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { INPUT_TYPES } from '../../components/form-input/form-input.types';
 import FormInput from '../../components/form-input/form-input.component';
@@ -24,6 +25,7 @@ import {
 } from './chats.styles';
 
 const Chats = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const token = useSelector(selectToken);
@@ -33,6 +35,12 @@ const Chats = () => {
 
   const [userList, setUserList] = useState([]);
   const [filteredUserList, setFilteredUserList] = useState([]);
+
+  // Redirecting Small Screen to single chat route if ther is a current chat
+  useEffect(() => {
+    if (window.innerWidth > 900 || !currentChat) return;
+    navigate(`/chats/${currentChat._id}`);
+  }, [currentChat, navigate]);
 
   useEffect(() => {
     if (!token) return;
@@ -77,7 +85,6 @@ const Chats = () => {
 
     setFilteredUserList(newUserList);
   };
-  console.log(filteredUserList);
 
   return (
     <Container>

@@ -5,6 +5,7 @@ import { userReducer } from './user/userSlice';
 import { usersReducer } from './users/usersSlice';
 import { chatReducer } from './chat/chatSlice';
 import { postReducer } from './post/postSlice';
+import { callReducer } from './call/callSlice';
 
 const rootReducer = combineReducers({
   alert: alertReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   chat: chatReducer,
   post: postReducer,
+  call: callReducer,
 });
 
 export default rootReducer;

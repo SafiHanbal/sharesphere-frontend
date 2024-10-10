@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useHref, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import getImageSrc, { IMAGE_FOLDER } from '../../utils/getImageSrc';
-import getSingularOrPlural from '../../utils/getSingularOrPlural';
+import getImageSrc, { IMAGE_FOLDER } from '../../utils/functions/getImageSrc';
+import getSingularOrPlural from '../../utils/functions/getSingularOrPlural';
 
 import ProfileInfo from '../../layouts/profile-info/profile-info.component';
 import TopNavbar from '../../layouts/top-navbar/top-navbar.component';

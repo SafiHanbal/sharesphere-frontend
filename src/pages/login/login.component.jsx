@@ -3,9 +3,10 @@ import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSocket } from '../../hooks/useSocket';
 
 import { useGoogleLogin } from '@react-oauth/google';
-import useFacebookLogin from '../../utils/hooks/useFacebookLogin';
+import useFacebookLogin from '../../hooks/useFacebookLogin';
 
 import GoogleSVG from '../../assets/icons/google.svg?react';
 import FacebookSVG from '../../assets/icons/facebook.svg?react';
@@ -45,6 +46,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const facebookLogin = useFacebookLogin(import.meta.env.VITE_FACEBOOK_APP_ID);
+  const { socketLogin } = useSocket();
+
   const loading = useSelector(selectLoading);
   const actionTarget = useSelector(selectActionTarget);
   const currentUser = useSelector(selectUser);
@@ -69,7 +72,7 @@ const Login = () => {
         }),
     }),
     onSubmit: () => {
-      dispatch(loginUserAsync(formik.values, formik.resetForm));
+      dispatch(loginUserAsync(formik.values, formik.resetForm, socketLogin));
     },
   });
 
@@ -77,7 +80,7 @@ const Login = () => {
     onSuccess: (credentialResponse) => {
       const accessToken = credentialResponse.access_token;
 
-      dispatch(loginWithGoogleAsync(accessToken));
+      dispatch(loginWithGoogleAsync(accessToken, socketLogin));
     },
     onError: () => {
       dispatch(showAlert('Login with google failed.'));
@@ -86,7 +89,7 @@ const Login = () => {
 
   const loginWithFacebookHandler = () => {
     facebookLogin((accessToken) => {
-      dispatch(loginWithFacebookAsync(accessToken));
+      dispatch(loginWithFacebookAsync(accessToken, socketLogin));
     });
   };
 

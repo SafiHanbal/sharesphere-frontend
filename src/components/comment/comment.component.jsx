@@ -1,7 +1,7 @@
-import getImageSrc from '../../utils/getImageSrc';
+import getImageSrc from '../../utils/functions/getImageSrc';
 import getFormattedTime, {
   TIME_FORMAT_STYLE,
-} from '../../utils/getFormattedTime';
+} from '../../utils/functions/getFormattedTime';
 
 import { AVATAR_TYPES } from '../avatar/avatar.types';
 import Avatar from '../avatar/avatar.component';
