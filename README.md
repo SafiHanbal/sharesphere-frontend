@@ -15,19 +15,19 @@ _Note: The backend is hosted on a free server, so it may take 2-3 minutes to giv
 ### Desktop Version
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <img src="" alt="Desktop Login Screen" width="400" />
-    <img src="" alt="Desktop Home Screen" width="400" />
-    <img src="" alt="Desktop Profile Screen" width="400" />
-    <img src="" alt="Desktop Chat Screen" width="400" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/desktop-login.png" alt="Desktop Login Screen" width="400" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/desktop-home.png" alt="Desktop Home Screen" width="400" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/desktop-profile.png" alt="Desktop Profile Screen" width="400" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/desktop-chat.png" alt="Desktop Chat Screen" width="400" />
 </div>
 
 ### Mobile Version
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <img src="" alt="Mobile Login Screen" width="200" />
-    <img src="" alt="Mobile Home Screen" width="200" />
-    <img src="" alt="Mobile Profile Screen" width="200" />
-    <img src="" alt="Mobile Chat Screen" width="200" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/mobile-login.png" alt="Mobile Login Screen" width="200" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/mobile-home.png" alt="Mobile Home Screen" width="200" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/mobile-profile.png" alt="Mobile Profile Screen" width="200" />
+    <img src="https://raw.githubusercontent.com/SafiHanbal/sharesphere-frontend/refs/heads/main/src/assets/screenshots/mobile-chat.png" alt="Mobile Chat Screen" width="200" />
 </div>
 
 ## Features
