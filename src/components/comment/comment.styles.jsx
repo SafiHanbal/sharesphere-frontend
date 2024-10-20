@@ -10,7 +10,7 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-template-rows: 18px;
-  column-gap: 8px;
+  column-gap: ${({ theme }) => theme.spacing.s2};
 `;
 
 export const AvatarContainer = styled.div`

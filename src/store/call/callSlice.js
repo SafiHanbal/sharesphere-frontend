@@ -14,7 +14,6 @@ const callSlice = createSlice({
     callStatus: null,
     callType: null,
     callUser: null,
-    callTime: '00:00',
   },
   reducers: {
     setCallStatus(state, action) {
@@ -26,13 +25,9 @@ const callSlice = createSlice({
     setCallUser(state, action) {
       state.callUser = action.payload;
     },
-    setCallTime(state, action) {
-      state.callTime = action.payload;
-    },
   },
 });
 
-export const { setCallType, setCallUser, setCallTime, setCallStatus } =
-  callSlice.actions;
+export const { setCallType, setCallUser, setCallStatus } = callSlice.actions;
 
 export const callReducer = callSlice.reducer;

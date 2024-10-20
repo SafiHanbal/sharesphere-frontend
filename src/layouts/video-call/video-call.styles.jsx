@@ -3,7 +3,7 @@ import { LB14Styles } from '../../utils/typography/label.styles';
 
 export const Container = styled.div`
   position: relative;
-  height: 100vh;
+  height: ${({ theme }) => theme.visibleHeight};
   max-width: 450px;
   padding: ${({ theme }) => theme.spacing.s3};
   text-align: center;
@@ -39,20 +39,25 @@ export const Text = styled.p`
   color: ${({ theme }) => theme.color.gray.g7};
 `;
 
-export const IncomingVideo = styled.div`
-  background-color: #cfcfcf;
+export const IncomingVideo = styled.video`
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.color.gray.g2};
   border-radius: ${({ theme }) => theme.spacing.s2};
 `;
 
-export const OutgoingVideo = styled.div`
+export const OutgoingVideo = styled.video`
   position: absolute;
   left: ${({ theme }) => theme.spacing.s3};
   bottom: ${({ theme }) => theme.spacing.s3};
   height: 200px;
   width: 130px;
 
-  background-color: #cfcfcf;
-  border: 1px solid ${({ theme }) => theme.color.gray.g5};
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.color.gray.g2};
+  border: 1px solid ${({ theme }) => theme.color.gray.g7};
   border-radius: ${({ theme }) => theme.spacing.s2};
   box-shadow: ${({ theme }) => theme.effect.shadow.offset.sl};
 `;

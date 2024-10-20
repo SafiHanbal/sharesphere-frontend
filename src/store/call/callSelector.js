@@ -16,8 +16,3 @@ export const selectCallUser = createSelector(
   [selectCallSlice],
   (callSlice) => callSlice.callUser
 );
-
-export const selectCallTime = createSelector(
-  [selectCallSlice],
-  (callSlice) => callSlice.callTime
-);

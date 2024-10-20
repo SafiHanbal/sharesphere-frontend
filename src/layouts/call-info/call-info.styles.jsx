@@ -8,7 +8,7 @@ import { H3Styles } from '../../utils/typography/heading.styles';
 import { LB14Styles } from '../../utils/typography/label.styles';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: ${({ theme }) => theme.visibleHeight};
   padding: ${({ theme }) => theme.spacing.s3};
   text-align: center;
   max-width: 500px;
@@ -150,4 +150,9 @@ export const RejectIcon = styled(CloseSVG)`
   & path {
     fill: ${({ theme }) => theme.color.nuetral.white};
   }
+`;
+
+export const Audio = styled.audio`
+  opacity: 0;
+  pointer-events: none;
 `;

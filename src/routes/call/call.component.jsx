@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTimer } from '../../hooks/useTimer';
+import { useSocket } from '../../hooks/useSocket';
 
 import CallInfo from '../../layouts/call-info/call-info.component';
 import VideoCall from '../../layouts/video-call/video-call.component';
@@ -10,11 +11,10 @@ import { selectUser } from '../../store/user/userSelector';
 import {
   selectCallStatus,
   selectCallUser,
-  selectCallTime,
   selectCallType,
 } from '../../store/call/callSelector';
 
-import { setCallTime, CALL_STATUS } from '../../store/call/callSlice';
+import { CALL_STATUS } from '../../store/call/callSlice';
 import { endCall, callNotAnswered } from '../../store/call/callAction';
 
 import { Container } from './call.styles';
@@ -24,12 +24,11 @@ const Call = () => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector(selectUser);
-
   const callStatus = useSelector(selectCallStatus);
   const callUser = useSelector(selectCallUser);
-  const callTime = useSelector(selectCallTime);
   const callType = useSelector(selectCallType);
 
+  const { endCallSocket } = useSocket();
   const { seconds, time, startTimer, stopTimer } = useTimer();
   const [notAnswered, setNotAnswered] = useState(false);
 
@@ -43,14 +42,12 @@ const Call = () => {
     if (callUser) return;
 
     stopTimer();
-    dispatch(setCallTime('00:00'));
     navigate('/chats');
   }, [callUser]);
 
   // Start timer
   useEffect(() => {
-    startTimer(callTime);
-    dispatch(setCallTime(time));
+    startTimer();
   }, [time]);
 
   // Reject call after 30 seconds if not accepted

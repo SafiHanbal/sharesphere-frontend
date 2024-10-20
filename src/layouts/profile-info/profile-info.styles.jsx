@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import AddPostIconSVG from '../../assets/icons/plus-square.SVG?react';
-import MenuIconSVG from '../../assets/icons/list.SVG?react';
-import ShareIconSVG from '../../assets/icons/share.SVG?react';
-import BackIconSVG from '../../assets/icons/arrow-left.SVG?react';
+import AddPostIconSVG from '../../assets/icons/plus-square.svg?react';
+import MenuIconSVG from '../../assets/icons/list.svg?react';
+import ShareIconSVG from '../../assets/icons/share.svg?react';
+import BackIconSVG from '../../assets/icons/arrow-left.svg?react';
 
 import {
   PB12Styles,
@@ -52,7 +52,7 @@ export const BackIcon = styled(BackIconSVG)`
 `;
 
 export const AddPostLink = styled(Link)`
-  height: 24px;
+  height: ${({ theme }) => theme.spacing.s4};
 `;
 
 export const AddPostIcon = styled(AddPostIconSVG)`

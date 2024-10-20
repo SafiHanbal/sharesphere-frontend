@@ -1,5 +1,7 @@
+import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSocket } from '../../hooks/useSocket';
+import { usePeer } from '../../hooks/usePeer';
 
 import LogoSrc from '../../assets/logo/logo.png';
 import getImageSrc from '../../utils/functions/getImageSrc';
@@ -31,20 +33,29 @@ import {
   RejectIcon,
   SmallScreenBtnContainer,
   LargeScreenBtnContainer,
+  Audio,
 } from './call-info.styles';
 import { CALL_STATUS } from '../../store/call/callSlice';
 
 const CallInfo = ({ time, notAnswered }) => {
   const dispatch = useDispatch();
+  const audioRef = useRef();
 
   const callUser = useSelector(selectCallUser);
   const callType = useSelector(selectCallType);
   const callStatus = useSelector(selectCallStatus);
 
   const { acceptCallSocket, rejectCallSocket, endCallSocket } = useSocket();
+  const { remoteStream } = usePeer();
+
+  useEffect(() => {
+    if (audioRef.current && remoteStream) {
+      audioRef.current.srcObject = remoteStream;
+    }
+  }, [remoteStream]);
 
   const onAccpetCall = () => {
-    acceptCallSocket(callUser?._id);
+    acceptCallSocket(callUser?._id, callType);
     dispatch(acceptCall());
   };
 
@@ -121,6 +132,10 @@ const CallInfo = ({ time, notAnswered }) => {
           <RejectButton onClick={onEndCall}>End Call</RejectButton>
         )}
       </LargeScreenBtnContainer>
+
+      <Audio ref={audioRef} autoPlay playsInline>
+        Your browser does not support the audio element
+      </Audio>
     </Container>
   );
 };

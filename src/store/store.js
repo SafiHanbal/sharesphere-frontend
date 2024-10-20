@@ -9,7 +9,7 @@ import rootReducer from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'chat', 'call'],
+  whitelist: ['user', 'chat'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

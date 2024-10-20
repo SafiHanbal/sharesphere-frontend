@@ -60,7 +60,7 @@ export const NextIcon = styled(NextIconSrc)`
 export const CountDotContainer = styled.div`
   position: absolute;
   left: 50%;
-  bottom: 8px;
+  bottom: ${({ theme }) => theme.spacing.s2};
   transform: translateX(-50%);
 
   & > *:not(:last-child) {
