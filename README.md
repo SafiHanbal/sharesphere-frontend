@@ -6,7 +6,7 @@ ShareSphere is a web based social media application that allows users to connect
 
 ## Live Demo
 
-[**https://shareshpere-hanbal.netlify.app**](https://shareshpere-hanbal.netlify.app)
+[**https://sharesphere-hanbal.netlify.app**](https://sharesphere-hanbal.netlify.app)
 
 _Note: The backend is hosted on a free server, so it may take 2-3 minutes to give the first response._
 
